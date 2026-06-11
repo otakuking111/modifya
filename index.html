@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مرحباً بك</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0f1117;
+      --paper:  #f8f6f1;
+      --gold:   #c9a84c;
+      --gold-lt:#f0d98a;
+      --muted:  #6b6860;
+      --white:  #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(15,17,23,0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .logo {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900; font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none; font-size: 0.95rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* background radial glow */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 40%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* decorative horizontal line */
+    .eyebrow {
+      display: flex; align-items: center; gap: 1rem;
+      color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em;
+      text-transform: uppercase; margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp .7s .2s forwards;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: ''; width: 40px; height: 1px; background: var(--gold); opacity: .5;
+    }
+
+    h1 {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .8s .4s forwards;
+    }
+    h1 span {
+      background: linear-gradient(120deg, var(--gold) 20%, var(--gold-lt) 60%, var(--gold) 90%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      max-width: 560px;
+      font-size: 1.15rem; line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp .8s .6s forwards;
+    }
+
+    .cta-group {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp .8s .8s forwards;
+    }
+
+    .btn {
+      padding: .85rem 2.2rem; border-radius: 6px;
+      font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1rem;
+      cursor: pointer; text-decoration: none; transition: all .25s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--ink);
+    }
+    .btn-primary:hover {
+      background: var(--gold-lt); transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,0.35);
+    }
+    .btn-ghost {
+      background: transparent; color: var(--white);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold); color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,0.35); font-size: 0.75rem;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { opacity: .5; }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--paper); color: var(--ink);
+      padding: 6rem 4rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+      position: relative;
+    }
+    .features::before {
+      content: '';
+      position: absolute; top: 0; right: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold));
+    }
+
+    .card {
+      padding: 2rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      background: var(--white);
+      transition: box-shadow .25s, transform .25s;
+    }
+    .card:hover {
+      box-shadow: 0 12px 36px rgba(201,168,76,0.15);
+      transform: translateY(-4px);
+    }
+    .card-icon {
+      font-size: 2.2rem; margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700; font-size: 1.2rem;
+      margin-bottom: .6rem; color: var(--ink);
+    }
+    .card p {
+      font-size: .95rem; line-height: 1.7; color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--ink);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      color: rgba(255,255,255,0.35);
+      font-size: .85rem;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .features { padding: 4rem 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">✦ نجمة</div>
+    <ul class="nav-links">
+      <li><a href="#features">المميزات</a></li>
+      <li><a href="#">من نحن</a></li>
+      <li><a href="#">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">أهلاً وسهلاً</div>
+
+    <h1>مرحباً بك في<br/><span>عالمٍ مختلف</span></h1>
+
+    <p class="hero-sub">
+      نُقدّم لك تجربةً فريدة تجمع بين الأصالة والابتكار.
+      انطلق معنا نحو آفاق جديدة، وابدأ رحلتك اليوم.
+    </p>
+
+    <div class="cta-group">
+      <a href="#features" class="btn btn-primary">ابدأ الآن</a>
+      <a href="#" class="btn btn-ghost">اعرف أكثر</a>
+    </div>
+
+    <div class="scroll-hint">
+      <span>تمرير للأسفل</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="card">
+      <div class="card-icon">🌟</div>
+      <h3>تصميم احترافي</h3>
+      <p>واجهة أنيقة ومدروسة تعكس هويتك بأسلوب بصري متميز ولا يُنسى.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>أداء فائق</h3>
+      <p>سرعة تحميل عالية وتجربة مستخدم سلسة على جميع الأجهزة.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <h3>أمان وموثوقية</h3>
+      <p>حماية كاملة لبياناتك مع أحدث معايير الأمان الرقمي.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>صُنع بـ <span>♥</span> لأجلك · جميع الحقوق محفوظة © 2025</p>
+  </footer>
+
+</body>
+</html>
