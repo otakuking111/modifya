@@ -1,273 +1,511 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مرحباً بك</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ink:    #0f1117;
-      --paper:  #f8f6f1;
-      --gold:   #c9a84c;
-      --gold-lt:#f0d98a;
-      --muted:  #6b6860;
-      --white:  #ffffff;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: var(--ink);
-      color: var(--white);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(15,17,23,0.7);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-    }
-    .logo {
-      font-family: 'Cairo', sans-serif;
-      font-weight: 900; font-size: 1.4rem;
-      color: var(--gold);
-      letter-spacing: 0.04em;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: rgba(255,255,255,0.7);
-      text-decoration: none; font-size: 0.95rem;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* background radial glow */
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 40%, rgba(201,168,76,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    /* decorative horizontal line */
-    .eyebrow {
-      display: flex; align-items: center; gap: 1rem;
-      color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em;
-      text-transform: uppercase; margin-bottom: 2rem;
-      opacity: 0; animation: fadeUp .7s .2s forwards;
-    }
-    .eyebrow::before, .eyebrow::after {
-      content: ''; width: 40px; height: 1px; background: var(--gold); opacity: .5;
-    }
-
-    h1 {
-      font-family: 'Cairo', sans-serif;
-      font-weight: 900;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      opacity: 0; animation: fadeUp .8s .4s forwards;
-    }
-    h1 span {
-      background: linear-gradient(120deg, var(--gold) 20%, var(--gold-lt) 60%, var(--gold) 90%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      max-width: 560px;
-      font-size: 1.15rem; line-height: 1.8;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 3rem;
-      opacity: 0; animation: fadeUp .8s .6s forwards;
-    }
-
-    .cta-group {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-      opacity: 0; animation: fadeUp .8s .8s forwards;
-    }
-
-    .btn {
-      padding: .85rem 2.2rem; border-radius: 6px;
-      font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1rem;
-      cursor: pointer; text-decoration: none; transition: all .25s;
-      border: none;
-    }
-    .btn-primary {
-      background: var(--gold); color: var(--ink);
-    }
-    .btn-primary:hover {
-      background: var(--gold-lt); transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(201,168,76,0.35);
-    }
-    .btn-ghost {
-      background: transparent; color: var(--white);
-      border: 1px solid rgba(255,255,255,0.25);
-    }
-    .btn-ghost:hover {
-      border-color: var(--gold); color: var(--gold);
-      transform: translateY(-2px);
-    }
-
-    /* scroll hint */
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      color: rgba(255,255,255,0.35); font-size: 0.75rem;
-      animation: bounce 2s infinite;
-    }
-    .scroll-hint svg { opacity: .5; }
-
-    /* ── FEATURES ── */
-    .features {
-      background: var(--paper); color: var(--ink);
-      padding: 6rem 4rem;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2.5rem;
-      position: relative;
-    }
-    .features::before {
-      content: '';
-      position: absolute; top: 0; right: 0; left: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold));
-    }
-
-    .card {
-      padding: 2rem;
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 10px;
-      background: var(--white);
-      transition: box-shadow .25s, transform .25s;
-    }
-    .card:hover {
-      box-shadow: 0 12px 36px rgba(201,168,76,0.15);
-      transform: translateY(-4px);
-    }
-    .card-icon {
-      font-size: 2.2rem; margin-bottom: 1rem;
-    }
-    .card h3 {
-      font-family: 'Cairo', sans-serif;
-      font-weight: 700; font-size: 1.2rem;
-      margin-bottom: .6rem; color: var(--ink);
-    }
-    .card p {
-      font-size: .95rem; line-height: 1.7; color: var(--muted);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      background: var(--ink);
-      border-top: 1px solid rgba(201,168,76,0.15);
-      color: rgba(255,255,255,0.35);
-      font-size: .85rem;
-    }
-    footer span { color: var(--gold); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(8px); }
-    }
-
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .features { padding: 4rem 1.5rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modifya — Books That Transform Your Life</title>
+  <meta name="description" content="Discover self-improvement books that help you grow, think better, and become the best version of yourself." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="logo">✦ نجمة</div>
-    <ul class="nav-links">
-      <li><a href="#features">المميزات</a></li>
-      <li><a href="#">من نحن</a></li>
-      <li><a href="#">تواصل معنا</a></li>
-    </ul>
-  </nav>
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__mark">M</span>
+        <span class="logo__text">Modifya</span>
+      </a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="eyebrow">أهلاً وسهلاً</div>
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search books…" autocomplete="off" />
+        <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+      </div>
 
-    <h1>مرحباً بك في<br/><span>عالمٍ مختلف</span></h1>
+      <nav class="nav" id="nav">
+        <a href="#hero" class="nav__link">Home</a>
+        <a href="#categories" class="nav__link">Categories</a>
+        <a href="#popular" class="nav__link">Popular</a>
+        <a href="#new-arrivals" class="nav__link">New Arrivals</a>
+      </nav>
 
-    <p class="hero-sub">
-      نُقدّم لك تجربةً فريدة تجمع بين الأصالة والابتكار.
-      انطلق معنا نحو آفاق جديدة، وابدأ رحلتك اليوم.
-    </p>
+      <button class="burger" id="burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-    <div class="cta-group">
-      <a href="#features" class="btn btn-primary">ابدأ الآن</a>
-      <a href="#" class="btn btn-ghost">اعرف أكثر</a>
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#hero" class="mobile-nav__link">Home</a>
+    <a href="#categories" class="mobile-nav__link">Categories</a>
+    <a href="#popular" class="mobile-nav__link">Popular</a>
+    <a href="#new-arrivals" class="mobile-nav__link">New Arrivals</a>
+  </div>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <div class="hero__bg-text" aria-hidden="true">READ</div>
+      <div class="container hero__inner">
+        <div class="hero__badge">📚 Self-Improvement Library</div>
+        <h1 class="hero__title">Discover Books That<br /><em>Transform Your Life</em></h1>
+        <p class="hero__sub">Every chapter is a step forward. Explore handpicked titles on mindset, habits, and personal mastery — and start becoming who you were meant to be.</p>
+        <div class="hero__actions">
+          <a href="#books" class="btn btn--primary">Explore Books</a>
+          <a href="#categories" class="btn btn--ghost">Browse Categories</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat"><strong>50+</strong><span>Books</span></div>
+          <div class="hero__stat"><strong>12k+</strong><span>Readers</span></div>
+          <div class="hero__stat"><strong>4.9★</strong><span>Avg. Rating</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEARCH RESULTS BANNER ===== -->
+    <div class="search-results-bar container" id="searchResultsBar" style="display:none;">
+      <p id="searchResultsText"></p>
+      <button class="btn btn--ghost btn--sm" id="clearSearchBtn">Clear search</button>
     </div>
 
-    <div class="scroll-hint">
-      <span>تمرير للأسفل</span>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </section>
+    <!-- ===== CATEGORIES ===== -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Browse by topic</span>
+          <h2 class="section-title">Explore Categories</h2>
+        </div>
+        <div class="categories-grid">
+          <a href="#books" class="category-card category-card--active">
+            <div class="category-card__icon">🧠</div>
+            <h3 class="category-card__name">Self Improvement</h3>
+            <span class="category-card__count">18 books</span>
+          </a>
+          <div class="category-card category-card--soon">
+            <div class="category-card__icon">💼</div>
+            <h3 class="category-card__name">Business</h3>
+            <span class="category-card__badge">Coming Soon</span>
+          </div>
+          <div class="category-card category-card--soon">
+            <div class="category-card__icon">🔬</div>
+            <h3 class="category-card__name">Psychology</h3>
+            <span class="category-card__badge">Coming Soon</span>
+          </div>
+          <div class="category-card category-card--soon">
+            <div class="category-card__icon">💰</div>
+            <h3 class="category-card__name">Finance</h3>
+            <span class="category-card__badge">Coming Soon</span>
+          </div>
+          <div class="category-card category-card--soon">
+            <div class="category-card__icon">⚡</div>
+            <h3 class="category-card__name">Productivity</h3>
+            <span class="category-card__badge">Coming Soon</span>
+          </div>
+          <div class="category-card category-card--soon">
+            <div class="category-card__icon">📖</div>
+            <h3 class="category-card__name">Novels</h3>
+            <span class="category-card__badge">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- FEATURES -->
-  <section class="features" id="features">
-    <div class="card">
-      <div class="card-icon">🌟</div>
-      <h3>تصميم احترافي</h3>
-      <p>واجهة أنيقة ومدروسة تعكس هويتتك بأسلوب بصري متميز ولا يُنسى.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">⚡</div>
-      <h3>أداء فائق</h3>
-      <p>سرعة تحميل عالية وتجربة مستخدم سلسة على جميع الأجهزة.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🔐</div>
-      <h3>أمان وموثوقية</h3>
-      <p>حماية كاملة لبياناتك مع أحدث معايير الأمان الرقمي.</p>
-    </div>
-  </section>
+    <!-- ===== BOOK SECTION ===== -->
+    <section class="section section--tinted" id="books">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Self Improvement</span>
+          <h2 class="section-title">All Books</h2>
+        </div>
+        <div class="books-grid" id="booksGrid">
 
-  <!-- FOOTER -->
-  <footer>
-    <p>صُنع بـ <span>♥</span> لأجلك · جميع الحقوق محفوظة © 2025</p>
+          <!-- Book 1 -->
+          <article class="book-card" data-title="Atomic Habits">
+            <div class="book-card__cover book-card__cover--1">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">Atomic Habits</p>
+                <p class="book-card__cover-author">James Clear</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">Atomic Habits</h3>
+              <p class="book-card__author">James Clear</p>
+              <p class="book-card__desc">Build tiny habits that compound into remarkable results. The #1 framework for lasting behavior change.</p>
+              <div class="book-card__rating" aria-label="4.9 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.9</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 2 -->
+          <article class="book-card" data-title="The 5AM Club">
+            <div class="book-card__cover book-card__cover--2">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">The 5AM Club</p>
+                <p class="book-card__cover-author">Robin Sharma</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">The 5AM Club</h3>
+              <p class="book-card__author">Robin Sharma</p>
+              <p class="book-card__desc">Own your morning, elevate your life. The routine used by the world's most successful people — finally revealed.</p>
+              <div class="book-card__rating" aria-label="4.7 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.7</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 3 -->
+          <article class="book-card" data-title="Can't Hurt Me">
+            <div class="book-card__cover book-card__cover--3">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">Can't Hurt Me</p>
+                <p class="book-card__cover-author">David Goggins</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">Can't Hurt Me</h3>
+              <p class="book-card__author">David Goggins</p>
+              <p class="book-card__desc">Master your mind and defy the odds. A raw, no-excuse story of pushing past every limit you thought you had.</p>
+              <div class="book-card__rating" aria-label="4.8 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.8</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 4 -->
+          <article class="book-card" data-title="The Power of Now">
+            <div class="book-card__cover book-card__cover--4">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">The Power of Now</p>
+                <p class="book-card__cover-author">Eckhart Tolle</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">The Power of Now</h3>
+              <p class="book-card__author">Eckhart Tolle</p>
+              <p class="book-card__desc">A guide to spiritual enlightenment. Learn to live fully in the present and escape the trap of the thinking mind.</p>
+              <div class="book-card__rating" aria-label="4.6 out of 5 stars">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-value">4.6</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 5 -->
+          <article class="book-card" data-title="Think and Grow Rich">
+            <div class="book-card__cover book-card__cover--5">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">Think and Grow Rich</p>
+                <p class="book-card__cover-author">Napoleon Hill</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">Think and Grow Rich</h3>
+              <p class="book-card__author">Napoleon Hill</p>
+              <p class="book-card__desc">The all-time bestseller on the mindset of wealth and success. 13 timeless principles studied by millions.</p>
+              <div class="book-card__rating" aria-label="4.8 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.8</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 6 -->
+          <article class="book-card" data-title="The Subtle Art of Not Giving a F*ck">
+            <div class="book-card__cover book-card__cover--6">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">The Subtle Art</p>
+                <p class="book-card__cover-author">Mark Manson</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">The Subtle Art of Not Giving a F*ck</h3>
+              <p class="book-card__author">Mark Manson</p>
+              <p class="book-card__desc">A counterintuitive approach to living a good life. Choose what actually matters and let go of the rest.</p>
+              <div class="book-card__rating" aria-label="4.7 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.7</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 7 -->
+          <article class="book-card" data-title="Deep Work">
+            <div class="book-card__cover book-card__cover--7">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">Deep Work</p>
+                <p class="book-card__cover-author">Cal Newport</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">Deep Work</h3>
+              <p class="book-card__author">Cal Newport</p>
+              <p class="book-card__desc">Rules for focused success in a distracted world. Learn to perform at your peak by eliminating shallow work.</p>
+              <div class="book-card__rating" aria-label="4.8 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.8</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Book 8 -->
+          <article class="book-card" data-title="Mindset">
+            <div class="book-card__cover book-card__cover--8">
+              <div class="book-card__spine"></div>
+              <div class="book-card__cover-inner">
+                <p class="book-card__cover-title">Mindset</p>
+                <p class="book-card__cover-author">Carol S. Dweck</p>
+              </div>
+            </div>
+            <div class="book-card__body">
+              <h3 class="book-card__title">Mindset</h3>
+              <p class="book-card__author">Carol S. Dweck</p>
+              <p class="book-card__desc">The new psychology of success. Understand the power of a growth mindset to achieve more in every area of life.</p>
+              <div class="book-card__rating" aria-label="4.7 out of 5 stars">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">4.7</span>
+              </div>
+              <div class="book-card__actions">
+                <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Buy Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- No results message (hidden by default) -->
+          <div class="no-results" id="noResults" style="display:none;">
+            <p>😕 No books found for "<span id="noResultsQuery"></span>"</p>
+            <button class="btn btn--ghost btn--sm" id="noResultsClear">Clear search</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== POPULAR SECTION ===== -->
+    <section class="section" id="popular">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Trending now</span>
+          <h2 class="section-title">Most Popular</h2>
+        </div>
+        <div class="featured-grid">
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--a">
+              <div class="featured-card__rank">#1</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">Atomic Habits</h3>
+              <p class="featured-card__author">James Clear</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.9</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--b">
+              <div class="featured-card__rank">#2</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">Can't Hurt Me</h3>
+              <p class="featured-card__author">David Goggins</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.8</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--c">
+              <div class="featured-card__rank">#3</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">Deep Work</h3>
+              <p class="featured-card__author">Cal Newport</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.8</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--d">
+              <div class="featured-card__rank">#4</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">Think and Grow Rich</h3>
+              <p class="featured-card__author">Napoleon Hill</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.8</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NEW ARRIVALS ===== -->
+    <section class="section section--tinted" id="new-arrivals">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Just added</span>
+          <h2 class="section-title">New Arrivals</h2>
+        </div>
+        <div class="featured-grid">
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--e">
+              <div class="featured-card__badge-new">NEW</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">The 5AM Club</h3>
+              <p class="featured-card__author">Robin Sharma</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.7</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--f">
+              <div class="featured-card__badge-new">NEW</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">Mindset</h3>
+              <p class="featured-card__author">Carol S. Dweck</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.7</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--g">
+              <div class="featured-card__badge-new">NEW</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">The Power of Now</h3>
+              <p class="featured-card__author">Eckhart Tolle</p>
+              <div class="featured-card__rating"><span class="stars">★★★★☆</span> 4.6</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="featured-card__cover featured-card__cover--h">
+              <div class="featured-card__badge-new">NEW</div>
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__title">The Subtle Art of Not Giving a F*ck</h3>
+              <p class="featured-card__author">Mark Manson</p>
+              <div class="featured-card__rating"><span class="stars">★★★★★</span> 4.7</div>
+              <a href="unlock.html" class="btn btn--primary btn--sm">📖 Read Free</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+      <div class="container cta-banner__inner">
+        <h2 class="cta-banner__title">Your next chapter starts today.</h2>
+        <p class="cta-banner__sub">Hundreds of readers are already transforming their lives. Join them.</p>
+        <a href="#books" class="btn btn--white">Start Reading Free</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo logo--light">
+          <span class="logo__mark">M</span>
+          <span class="logo__text">Modifya</span>
+        </a>
+        <p class="footer__tagline">Books that help you grow, think deeper, and live better — one page at a time.</p>
+      </div>
+
+      <div class="footer__links">
+        <h4 class="footer__heading">Platform</h4>
+        <a href="#hero" class="footer__link">Home</a>
+        <a href="#categories" class="footer__link">Categories</a>
+        <a href="#popular" class="footer__link">Popular Books</a>
+        <a href="#new-arrivals" class="footer__link">New Arrivals</a>
+      </div>
+
+      <div class="footer__links">
+        <h4 class="footer__heading">Company</h4>
+        <a href="#about" class="footer__link">About Modifya</a>
+        <a href="mailto:hello@modifya.com" class="footer__link">Contact Us</a>
+        <a href="#privacy" class="footer__link">Privacy Policy</a>
+        <a href="#terms" class="footer__link">Terms of Service</a>
+      </div>
+
+      <div class="footer__links">
+        <h4 class="footer__heading">Connect</h4>
+        <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" class="footer__link">💬 WhatsApp</a>
+        <a href="#" class="footer__link">🎵 TikTok</a>
+        <a href="#" class="footer__link">📸 Instagram</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2025 Modifya. All rights reserved.</p>
+        <p>Built for readers who refuse to stay the same.</p>
+      </div>
+    </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
