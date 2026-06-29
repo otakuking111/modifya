@@ -5,147 +5,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Reset — modifya.store</title>
     <style>
-        /* --- إعدادات الخطوط والأنماط الأساسية --- */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap');
+        /* --- استيراد خطوط راقية ومريحة جداً للقراءة الطويلة --- */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap');
 
         :root {
-            --bg-color: #0c0c0c;
-            --text-color: #e5c158; /* لون ذهبي دافئ ومريح للعين */
-            --headings-color: #ffffff; /* لون العناوين الافتراضي في الوضع المظلم */
-            --accent-color: #b89030;
-            --card-bg: #161616;
-            --border-color: rgba(229, 193, 88, 0.2);
+            /* --- الوضع الافتراضي الجديد: وايت مود (كتاب ورقي فاخر) --- */
+            --bg-color: #f7f4eb;          /* لون ورق الشامواه الفاخر المريح جداً للعين */
+            --container-bg: #ffffff;      /* لون الصفحة البيضاء الصافية */
+            --text-color: #2c2520;        /* بني داكن ملكي مريح جداً للقراءة بدلاً من الأسود الحاد */
+            --headings-color: #8a6d3b;    /* لون ذهبي مطفأ كلاسيكي دافئ للعناوين الرئيسية */
+            --sub-headings: #4a3e3d;      /* بني كلاسيكي للعناوين الفرعية */
+            --accent-color: #c5a880;      /* لون ذهبي فاتح للفواصل والحدود */
+            --border-color: rgba(197, 168, 128, 0.4);
+            --toc-hover-bg: #fdfbf7;
+            
             --font-title: 'Cinzel', serif;
-            --font-body: 'Playfair Display', serif;
-            --font-sans: 'Poppins', sans-serif;
-            --max-width: 740px;
+            --font-body: 'Lora', serif;
+            --font-sans: 'Inter', sans-serif;
+            --max-width: 760px;
         }
 
-        /* --- أنماط الوضع الفاتح (White Mode) --- */
-        html.white-mode {
-            --bg-color: #fcfbf7;
-            --text-color: #222222;
-            --headings-color: #8c6212; /* لون عناوين ذهبي ملكي غامق يناسب الخلفية الفاتحة */
-            --accent-color: #b89030;
-            --card-bg: #f4f1ea;
-            --border-color: rgba(140, 98, 18, 0.2);
+        /* --- الألوان عند التبديل إلى الدارك مود (الوضع المظلم المتناسق) --- */
+        html.dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1a1a1a;
+            --text-color: #e3dec3;        /* ذهبي عاجي باهت مريح جداً للعين وسط الظلام */
+            --headings-color: #dfb76c;    /* ذهبي مشرق متناسق مع الخلفية المظلمة */
+            --sub-headings: #ffffff;
+            --accent-color: #8a6d3b;
+            --border-color: rgba(223, 183, 108, 0.2);
+            --toc-hover-bg: #222222;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* تحسين التمرير ليكون ناعماً عند الانتقال عبر الفهرس */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 30px;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-body);
-            line-height: 1.8;
-            font-size: 1.25rem;
-            padding: 40px 20px;
-            scroll-behavior: smooth;
+            line-height: 1.85;
+            font-size: 1.3rem;
+            padding: 60px 20px;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- حاوية الكتاب الرئيسية --- */
+        /* --- حاوية الكتاب المصممة مثل صفحات الروايات --- */
         .book-container {
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 40px;
-            background-color: var(--card-bg);
+            padding: 60px 50px;
+            background-color: var(--container-bg);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(44, 37, 32, 0.04);
         }
 
-        html.white-mode .book-container {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        html.dark-mode .book-container {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- الترويسة العلوية للموقع --- */
+        /* --- ترويسة الموقع المستقلة --- */
         .site-header {
             text-align: center;
             font-family: var(--font-sans);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 60px;
-            padding-bottom: 15px;
-            border-bottom: 1px double var(--border-color);
-            opacity: 0.8;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0.7;
         }
 
         .site-header a {
-            color: var(--text-color);
+            color: var(--headings-color);
             text-decoration: none;
             font-weight: 600;
         }
 
-        /* --- العناوين والفواصل --- */
-        h1, h2, h3 {
+        .site-header a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- تنسيق العناوين --- */
+        h1, h2, h3, h4 {
             font-family: var(--font-title);
             color: var(--headings-color);
             text-align: center;
-            letter-spacing: 1px;
+            font-weight: 700;
         }
 
         .book-main-title {
-            font-size: 3.5rem;
-            margin-top: 40px;
-            margin-bottom: 10px;
+            font-size: 3.8rem;
+            margin-top: 20px;
+            margin-bottom: 15px;
             line-height: 1.1;
+            letter-spacing: 3px;
         }
 
         .book-subtitle {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-family: var(--font-sans);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent-color);
+            letter-spacing: 2px;
+            color: var(--text-color);
             text-align: center;
-            margin-bottom: 40px;
+            max-width: 550px;
+            margin: 0 auto 50px auto;
+            opacity: 0.85;
+            line-height: 1.6;
         }
 
-        h2.section-title {
-            font-size: 2.2rem;
-            margin-top: 80px;
-            margin-bottom: 20px;
-            padding-top: 40px;
+        .section-separator {
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 0 auto 50px auto;
+        }
+
+        /* العناوين الكبرى لكل ريست */
+        .reset-section {
+            padding-top: 60px;
+            margin-top: 60px;
             border-top: 1px solid var(--border-color);
         }
 
         .reset-number {
             font-family: var(--font-sans);
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            color: var(--accent-color);
+            color: var(--headings-color);
             letter-spacing: 4px;
             display: block;
             text-align: center;
-            margin-top: 60px;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        h3.chapter-subtitle {
-            font-size: 1.5rem;
-            margin: 35px 0 20px 0;
-            text-align: left;
+        h2.section-title {
+            font-size: 2.4rem;
+            color: var(--headings-color);
+            margin-bottom: 15px;
+        }
+
+        .reset-target {
+            text-align: center;
             font-style: italic;
+            font-size: 1.15rem;
+            margin-bottom: 50px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* --- الفهرس (Contents) --- */
+        /* عناوين الفقرات الداخلية */
+        h3.chapter-subtitle {
+            font-family: var(--font-body);
+            color: var(--sub-headings);
+            font-size: 1.5rem;
+            margin: 45px 0 20px 0;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* --- فهرس محتويات الكتاب (Contents) --- */
         .table-of-contents {
             margin: 60px 0;
-            padding: 30px;
+            padding: 40px;
+            background-color: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 4px;
         }
 
         .toc-title {
             font-size: 1.8rem;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            color: var(--headings-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .toc-list {
@@ -153,26 +203,25 @@
         }
 
         .toc-item {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed rgba(229, 193, 88, 0.1);
-        }
-
-        html.white-mode .toc-item {
-            border-bottom: 1px dashed rgba(140, 98, 18, 0.1);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
         }
 
         .toc-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         .toc-link {
             display: block;
-            color: var(--text-color);
+            color: var(--sub-headings);
             text-decoration: none;
             font-weight: 600;
             font-family: var(--font-sans);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            transition: color 0.2s ease;
         }
 
         .toc-link:hover {
@@ -184,68 +233,74 @@
             font-size: 1.05rem;
             font-family: var(--font-body);
             font-style: italic;
-            margin-top: 5px;
-            opacity: 0.9;
+            margin-top: 6px;
+            opacity: 0.8;
+            color: var(--text-color);
         }
 
-        /* --- النصوص والفقرات --- */
+        /* --- النصوص والفقرات الفنية للكتاب --- */
         p {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             text-align: justify;
             text-justify: inter-word;
         }
 
         .book-intro-quote {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-style: italic;
             text-align: center;
-            margin: 40px 0;
-            color: var(--headings-color);
+            margin: 45px 0;
+            color: var(--sub-headings);
             line-height: 1.6;
+            font-weight: 500;
         }
 
         .divider {
             text-align: center;
-            margin: 40px 0;
-            letter-spacing: 5px;
+            margin: 50px 0;
+            letter-spacing: 6px;
             color: var(--accent-color);
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
+        /* القوائم المخصصة للأسئلة العميقة */
         .question-list {
-            margin: 30px 0 30px 20px;
+            margin: 35px 0 35px 25px;
             list-style-type: none;
         }
 
         .question-list li {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             position: relative;
-            padding-left: 20px;
+            padding-left: 25px;
             font-style: italic;
+            color: var(--text-color);
         }
 
         .question-list li::before {
             content: "—";
             position: absolute;
             left: 0;
-            color: var(--accent-color);
+            color: var(--headings-color);
+            font-weight: bold;
         }
 
-        /* --- زر تغيير الوضع (White Mode Toggle) --- */
+        /* --- زر تبديل الوضع (Floating Mode Toggle) --- */
         .mode-toggle-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
             background-color: var(--text-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 12px 20px;
+            color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px 24px;
             font-family: var(--font-sans);
             font-weight: 600;
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             letter-spacing: 1px;
             display: flex;
@@ -255,32 +310,37 @@
 
         .mode-toggle-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        /* --- تحسين الشاشات الصغيرة (الهواتف) --- */
+        /* --- التجاوب مع شاشات الهواتف المحمولة لجعلها مثالية --- */
         @media (max-width: 768px) {
             body {
-                padding: 15px 10px;
-                font-size: 1.15rem;
+                padding: 20px 10px;
+                font-size: 1.2rem;
             }
             .book-container {
-                padding: 20px 15px;
+                padding: 40px 25px;
+                border-radius: 0;
+                border: none;
             }
             .book-main-title {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
             h2.section-title {
-                font-size: 1.8rem;
+                font-size: 1.9rem;
             }
             h3.chapter-subtitle {
-                text-align: left;
+                font-size: 1.35rem;
+            }
+            .table-of-contents {
+                padding: 25px 20px;
             }
             .mode-toggle-btn {
-                bottom: 20px;
-                right: 20px;
-                padding: 10px 16px;
-                font-size: 0.8rem;
+                bottom: 25px;
+                right: 25px;
+                padding: 12px 18px;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -288,7 +348,7 @@
 <body>
 
     <button class="mode-toggle-btn" id="modeToggle" onclick="toggleMode()">
-        <span id="toggleText">☀️ White Mode</span>
+        <span id="toggleText">🌙 Dark Mode</span>
     </button>
 
     <div class="book-container">
@@ -297,9 +357,10 @@
             Published Exclusively on <a href="https://modifya.store">modifya.store</a>
         </header>
 
-        <section style="text-align: center; margin-bottom: 80px;">
+        <section style="margin-bottom: 70px;">
             <h1 class="book-main-title">THE<br>RESET</h1>
             <div class="book-subtitle">The guide to escaping anxiety, rebuilding yourself, and taking back control of your life.</div>
+            <div class="section-separator"></div>
         </section>
 
         <nav class="table-of-contents">
@@ -348,8 +409,8 @@
             </ul>
         </nav>
 
-        <article style="margin-top: 60px;">
-            <h2 style="font-family: var(--font-title); font-size: 2rem; margin-bottom: 30px;">Before You Begin</h2>
+        <article style="margin-bottom: 60px;">
+            <h2 style="font-family: var(--font-title); font-size: 2.1rem; margin-bottom: 25px; text-align: left;">Before You Begin</h2>
             <p class="book-intro-quote">You are not broken. You are overloaded.</p>
             <p>Somewhere along the way, life became heavier than it should be. Thoughts got louder. Habits got harder to control. And the version of you that once felt clear, confident, and alive started to fade into the background of your own existence.</p>
             <p>You kept going. You kept showing up. But something inside you knew — this is not how it was supposed to feel.</p>
@@ -362,13 +423,13 @@
             <p>Each one targets a different dimension of your life — your mind, your habits, your relationships, your identity, your direction, your future. You can read them in order or go directly to the one that speaks to what you are carrying right now.</p>
             <p>But do not just read. Apply. The words on these pages only become useful when you take them off the page and into your days.</p>
             <p>If you are here, it means something in you is ready to change. Not tomorrow. Not someday. Now.</p>
-            <p>This is your reset.</p>
+            <p style="font-weight: 500; font-style: italic;">This is your reset.</p>
         </article>
 
-        <section id="reset1">
+        <section id="reset1" class="reset-section">
             <span class="reset-number">Reset 1</span>
             <h2 class="section-title">Wake Up</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who feel lost, disconnected, and unsure why life feels so heavy.</p>
+            <p class="reset-target">For those who feel lost, disconnected, and unsure why life feels so heavy.</p>
             
             <h3 class="chapter-subtitle">The Weight You Cannot Name</h3>
             <p>You wake up and something already feels wrong — but you cannot say what it is. The day has not even started and there is already a pressure in your chest, a fog behind your eyes, a quiet voice whispering that today will be exactly like yesterday.</p>
@@ -402,10 +463,10 @@
             <p>That sentence is the beginning of your reset.</p>
         </section>
 
-        <section id="reset2">
+        <section id="reset2" class="reset-section">
             <span class="reset-number">Reset 2</span>
             <h2 class="section-title">Break the Chains</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those struggling with addiction, destructive habits, or feeling trapped by their own choices.</p>
+            <p class="reset-target">For those struggling with addiction, destructive habits, or feeling trapped by their own choices.</p>
             
             <h3 class="chapter-subtitle">The Trap That Feels Like Comfort</h3>
             <p>Every chain starts as a solution. You found something that made the pain quieter, the anxiety smaller, the loneliness less sharp. And it worked — at first. That is the nature of every destructive habit: it solves something real, even as it creates something worse.</p>
@@ -437,10 +498,10 @@
             <p>Once is enough to start.</p>
         </section>
 
-        <section id="reset3">
+        <section id="reset3" class="reset-section">
             <span class="reset-number">Reset 3</span>
             <h2 class="section-title">Silence the Noise</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those overwhelmed by anxiety, overthinking, fear, and constant mental pressure.</p>
+            <p class="reset-target">For those overwhelmed by anxiety, overthinking, fear, and constant mental pressure.</p>
             
             <h3 class="chapter-subtitle">The Mind That Will Not Stop</h3>
             <p>You are lying in bed at two in the morning, running the same conversation through your head for the fourth time. You are in the middle of a meal and your brain is already three days ahead, cataloguing everything that could go wrong. You are trying to be present but your mind is somewhere between last week's mistake and next month's disaster.</p>
@@ -465,10 +526,10 @@
             <p>Today, sit in silence for ten minutes. No phone. No music. No input. Just you and your breath. If the mind races, let it. Do not fight it. Simply observe. This is the first act of reclaiming your own mind.</p>
         </section>
 
-        <section id="reset4">
+        <section id="reset4" class="reset-section">
             <span class="reset-number">Reset 4</span>
             <h2 class="section-title">Know Your Worth</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who doubt themselves, seek validation, or have forgotten their true value.</p>
+            <p class="reset-target">For those who doubt themselves, seek validation, or have forgotten their true value.</p>
             
             <h3 class="chapter-subtitle">The Approval Trap</h3>
             <p>Somewhere along the way, you learned that your worth was something you had to earn. Maybe it was a parent whose love felt conditional. A school that ranked you. A relationship that made you feel like you were never quite enough. A world that measured you in metrics that had nothing to do with who you actually are.</p>
@@ -494,10 +555,10 @@
             <p>Write three things you would never allow someone to say to your best friend — and then notice if you say them to yourself. Choose one to stop. Start there.</p>
         </section>
 
-        <section id="reset5">
+        <section id="reset5" class="reset-section">
             <span class="reset-number">Reset 5</span>
             <h2 class="section-title">Cut the Poison</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those surrounded by toxic relationships, manipulation, or people who steal their peace.</p>
+            <p class="reset-target">For those surrounded by toxic relationships, manipulation, or people who steal their peace.</p>
             
             <h3 class="chapter-subtitle">The Slow Drain</h3>
             <p>Not all damage is dramatic. Some of the worst comes quietly, in relationships that drain you so gradually you barely notice — until one day you realize that around certain people, you always feel smaller, more anxious, more exhausted, more unsure of yourself.</p>
@@ -520,10 +581,10 @@
             <p>Name one relationship in your life that consistently leaves you feeling worse, not better. You do not have to do anything yet. Simply name it — and be honest with yourself about what it is costing you.</p>
         </section>
 
-        <section id="reset6">
+        <section id="reset6" class="reset-section">
             <span class="reset-number">Reset 6</span>
             <h2 class="section-title">Build Discipline</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who keep starting over, procrastinate, or struggle to stay consistent.</p>
+            <p class="reset-target">For those who keep starting over, procrastinate, or struggle to stay consistent.</p>
             
             <h3 class="chapter-subtitle">The Motivation Lie</h3>
             <p>You have been waiting for motivation. You know the feeling — that surge of energy and clarity that makes everything feel possible, where you can sit down and work for hours and it feels effortless. You have been waiting for that feeling to arrive before you begin.</p>
@@ -547,10 +608,10 @@
             <p>Choose one thing you have been starting and stopping. Reduce it to its smallest possible form — something you could do in under two minutes. Then do it right now. Not tomorrow. Right now. That is the beginning of your discipline.</p>
         </section>
 
-        <section id="reset7">
+        <section id="reset7" class="reset-section">
             <span class="reset-number">Reset 7</span>
             <h2 class="section-title">Rebuild Your Mind</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those held back by negative thoughts, limiting beliefs, and self-sabotage.</p>
+            <p class="reset-target">For those held back by negative thoughts, limiting beliefs, and self-sabotage.</p>
             
             <h3 class="chapter-subtitle">The Beliefs That Run Your Life</h3>
             <p>You have a set of beliefs about yourself that were formed long before you were old enough to evaluate them. Some were given to you by parents. Some by experiences. Some by a moment of failure or rejection that wrote itself into your operating system as permanent truth.</p>
@@ -574,10 +635,10 @@
             <p>Identify one belief that limits you. Write it down exactly as it sounds in your head. Then write three pieces of genuine evidence that contradict it. Not wishful thinking — actual evidence from your actual life. This is the beginning of dismantling it.</p>
         </section>
 
-        <section id="reset8">
+        <section id="reset8" class="reset-section">
             <span class="reset-number">Reset 8</span>
             <h2 class="section-title">Find Your Direction</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who feel stuck, without purpose, or uncertain about where life is leading them.</p>
+            <p class="reset-target">For those who feel stuck, without purpose, or uncertain about where life is leading them.</p>
             
             <h3 class="chapter-subtitle">The Paralysis of Not Knowing</h3>
             <p>You want to move but you do not know where to go. You want to build something but you cannot see what it should be. You look at other people who seem to know exactly who they are and what they are for, and you wonder why that clarity has never arrived for you.</p>
@@ -601,10 +662,10 @@
             <p>Write down three things you have been curious about but have never seriously pursued. Choose one. Find out what the smallest possible version of trying it looks like. Do that this week.</p>
         </section>
 
-        <section id="reset9">
+        <section id="reset9" class="reset-section">
             <span class="reset-number">Reset 9</span>
             <h2 class="section-title">Become Unstoppable</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those ready to build confidence, resilience, and the courage to take control of their future.</p>
+            <p class="reset-target">For those ready to build confidence, resilience, and the courage to take control of their future.</p>
             
             <h3 class="chapter-subtitle">The Anatomy of Resilience</h3>
             <p>Resilience is not the absence of difficulty. It is not the ability to feel no pain. It is not some superhuman immunity to failure and loss and setbacks. It is something far more practical: the ability to return.</p>
@@ -627,10 +688,10 @@
             <p>Name one thing you have been afraid to do. One thing you have postponed because of fear disguised as being not ready, waiting for the right time, or needing more preparation. Decide today that you will take one action toward it within the next forty-eight hours. Not the whole thing — one action. Then do it.</p>
         </section>
 
-        <section id="reset10">
+        <section id="reset10" class="reset-section">
             <span class="reset-number">Reset 10</span>
             <h2 class="section-title">The New You</h2>
-            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who are ready to leave the past behind and build a life they can truly be proud of.</p>
+            <p class="reset-target">For those who are ready to leave the past behind and build a life they can truly be proud of.</p>
             
             <h3 class="chapter-subtitle">You Have Already Done Something Hard</h3>
             <p>If you have made it here — through ten resets, ten honest confrontations with yourself — you have already done something that most people never do. You have looked at yourself clearly. You have named what needed to change. You have begun.</p>
@@ -671,13 +732,12 @@
             const htmlElement = document.documentElement;
             const toggleText = document.getElementById('toggleText');
             
-            // التحقق من الوضع الحالي وتبديله
-            if (htmlElement.classList.contains('white-mode')) {
-                htmlElement.classList.remove('white-mode');
-                toggleText.innerText = '☀️ White Mode';
-            } else {
-                htmlElement.classList.add('white-mode');
+            if (htmlElement.classList.contains('dark-mode')) {
+                htmlElement.classList.remove('dark-mode');
                 toggleText.innerText = '🌙 Dark Mode';
+            } else {
+                htmlElement.classList.add('dark-mode');
+                toggleText.innerText = '☀️ White Mode';
             }
         }
     </script>
