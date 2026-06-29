@@ -1,122 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifya</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modifya</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="header-container">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
 
-            <a href="#" class="logo">Modifya</a>
+      <a class="logo" href="#">Modifya</a>
 
-            <div class="search-wrapper">
-                <input type="text" id="searchBar" placeholder="Search ideas..." autocomplete="off">
-            </div>
-            <button class="theme-toggle" id="themeToggle">🌙</button>
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
+      <input id="searchBar" type="text" placeholder="Search books..." />
 
-        </div>
-    </header>
+      <button id="themeToggle" class="btn">☀️</button>
 
-    <!-- SIDEBAR MENU -->
-    <nav class="sidebar-menu" id="sidebarMenu">
-        <div class="menu-content">
+      <button id="menuToggle" class="menu-btn">☰</button>
 
-            <div class="menu-section">
-                <h3>Categories</h3>
-                <ul>
-                    <li><a href="#" class="active-link">Self Improvement</a></li>
-                    <li><span class="placeholder-link">Business (Coming Soon)</span></li>
-                    <li><span class="placeholder-link">Psychology (Coming Soon)</span></li>
-                    <li><span class="placeholder-link">Finance (Coming Soon)</span></li>
-                    <li><span class="placeholder-link">Novels (Coming Soon)</span></li>
-                </ul>
-            </div>
+    </div>
+  </header>
 
-            <div class="menu-section">
-                <h3>Explore</h3>
-                <ul>
-                    <li><a href="#" id="menuPopularBtn">Popular Ideas</a></li>
-                    <li><span class="placeholder-link">About (Coming Soon)</span></li>
-                </ul>
-            </div>
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar">
+    <a href="#">Self Improvement</a>
+    <a href="#">Business (Coming Soon)</a>
+    <a href="#">Psychology (Coming Soon)</a>
+    <a href="#">Finance (Coming Soon)</a>
+    <a href="#">Novels (Coming Soon)</a>
+  </aside>
 
-        </div>
-    </nav>
+  <!-- OVERLAY -->
+  <div id="overlay" class="overlay"></div>
 
-    <!-- OVERLAY -->
-    <div class="menu-overlay" id="menuOverlay"></div>
+  <!-- MAIN -->
+  <main class="main">
 
-    <!-- MAIN -->
-    <main class="main-container">
+    <h1>When life feels dull, the right books can change everything.</h1>
 
-        <!-- HERO -->
-        <section class="hero">
+    <p>A simple library of self-improvement books coming soon.</p>
 
-            <h1>
-                When life feels dull, new ideas can change everything.
-            </h1>
-
-            <p>
-                Explore curated self-growth ideas designed to shift your mindset and help you move forward.
-            </p>
-
-        </section>
-
-        <!-- ACTION -->
-        <section class="actions-section">
-            <button id="popularBtn" class="btn-secondary">Popular Ideas</button>
-        </section>
-
-        <!-- CONTENT -->
-        <section class="content-grid" id="contentGrid">
-
-            <div class="placeholder-card" data-search="coming soon ideas growth mindset self improvement">
-
-                <span class="card-status">Coming Soon</span>
-
-                <h2>Curated Knowledge Library</h2>
-
-                <p>
-                    We are building a simple space for powerful ideas that help you think clearer and grow stronger.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- MODAL -->
-    <div class="modal" id="popularModal">
-        <div class="modal-content">
-
-            <button class="modal-close" id="modalClose">&times;</button>
-
-            <h3>Popular Ideas</h3>
-
-            <p class="modal-placeholder">Coming Soon</p>
-
-        </div>
+    <div class="card">
+      Coming Soon
     </div>
 
-    <div class="modal-overlay" id="modalOverlay"></div>
+    <button id="openModal">Popular Books</button>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <p>&copy; 2026 Modifya. All rights reserved.</p>
-    </footer>
+  </main>
 
-    <script src="script.js"></script>
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-box">
+      <h3>Popular Books</h3>
+      <p>Coming Soon</p>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
