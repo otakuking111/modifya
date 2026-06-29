@@ -1,64 +1,510 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Modifya</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- SEO Meta -->
+  <title>Modifya — [Book Title] | The Self-Improvement Guide</title>
+  <meta name="description" content="A practical guide to discipline, habits, and the mindset that makes personal growth inevitable. One book. One shift." />
+  <meta name="keywords" content="self improvement book, personal growth, productivity habits, discipline mindset, confidence building, motivation guide" />
+  <meta property="og:title" content="Modifya — [Book Title]" />
+  <meta property="og:description" content="A practical guide to discipline, habits, and the mindset that makes personal growth inevitable." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container">
-
-      <a class="logo" href="#">Modifya</a>
-
-      <input id="searchBar" type="text" placeholder="Search books..." />
-
-      <button id="themeToggle" class="btn">☀️</button>
-
-      <button id="menuToggle" class="menu-btn">☰</button>
-
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo">Modifya</a>
+      <nav class="nav__links">
+        <a href="#benefits">Benefits</a>
+        <a href="#preview">Preview</a>
+        <a href="#whats-inside">Inside</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light mode">
+          <span class="theme-toggle__icon">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+        </button>
+        <a href="#pricing" class="btn btn--primary btn--sm">Get the Book</a>
+      </div>
     </div>
   </header>
 
-  <!-- SIDEBAR -->
-  <aside id="sidebar" class="sidebar">
-    <a href="#">Self Improvement</a>
-    <a href="#">Business (Coming Soon)</a>
-    <a href="#">Psychology (Coming Soon)</a>
-    <a href="#">Finance (Coming Soon)</a>
-    <a href="#">Novels (Coming Soon)</a>
-  </aside>
+  <main>
 
-  <!-- OVERLAY -->
-  <div id="overlay" class="overlay"></div>
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero" id="hero">
+      <div class="hero__bookmark" aria-hidden="true"></div>
+      <div class="container hero__inner">
 
-  <!-- MAIN -->
-  <main class="main">
+        <div class="hero__text" data-animate="fade-up">
+          <p class="eyebrow">A Self-Improvement Guide</p>
+          <h1 class="hero__title">
+            <!-- Book title placeholder — replace with your actual title -->
+            <span class="hero__title-placeholder">[Your Book Title]</span>
+          </h1>
+          <p class="hero__subtitle">
+            You already know what needs to change.<br />
+            This book shows you how to actually do it.
+          </p>
+          <p class="hero__body">
+            No motivation pep talks. No vague advice.<br />
+            Just a clear, honest framework for becoming who you want to be.
+          </p>
+          <div class="hero__cta-row">
+            <a href="#pricing" class="btn btn--primary btn--lg">Get the Book</a>
+            <a href="#preview" class="btn btn--ghost btn--lg">See a Preview</a>
+          </div>
+          <p class="hero__trust">PDF &nbsp;·&nbsp; Instant download &nbsp;·&nbsp; Lifetime access</p>
+        </div>
 
-    <h1>When life feels dull, the right books can change everything.</h1>
+        <div class="hero__visual" data-animate="fade-in">
+          <div class="book-mockup">
+            <div class="book-mockup__cover">
+              <!-- Replace this div with your actual cover image -->
+              <div class="book-mockup__placeholder">
+                <span class="book-mockup__placeholder-brand">Modifya</span>
+                <span class="book-mockup__placeholder-label">Cover Coming Soon</span>
+              </div>
+            </div>
+            <div class="book-mockup__shadow"></div>
+            <div class="book-mockup__spine"></div>
+          </div>
+        </div>
 
-    <p>A simple library of self-improvement books coming soon.</p>
+      </div>
 
-    <div class="card">
-      Coming Soon
-    </div>
+      <div class="hero__scroll-hint" aria-hidden="true">
+        <span></span>
+      </div>
+    </section>
 
-    <button id="openModal">Popular Books</button>
+    <!-- ============================================================
+         DESCRIPTION
+    ============================================================ -->
+    <section class="description section" id="description">
+      <div class="container description__inner">
+        <div class="section-label" data-animate="fade-up">About the Book</div>
+        <h2 class="section-title" data-animate="fade-up">
+          Growth isn't accidental.<br />
+          <em>It's engineered.</em>
+        </h2>
+        <div class="description__columns" data-animate="fade-up">
+          <div class="description__col">
+            <p>This book was written for people who are done with inspiration that fades by Monday morning.</p>
+            <p>It strips self-improvement down to what actually works — and builds it back up in a way that fits your real life.</p>
+          </div>
+          <div class="description__col">
+            <p>No vague affirmations. No overnight-success promises.</p>
+            <p>A structured, honest roadmap for the kind of growth that sticks — because it's built on systems, not feelings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BENEFITS
+    ============================================================ -->
+    <section class="benefits section section--alt" id="benefits">
+      <div class="container">
+        <div class="section-label" data-animate="fade-up">What You'll Gain</div>
+        <h2 class="section-title" data-animate="fade-up">
+          Six shifts that change<br />how you operate.
+        </h2>
+        <div class="benefits__grid" data-animate="stagger">
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M12 8a4 4 0 0 0-4-4c0 2.5 2 4.5 4 4z"/><path d="M12 8a4 4 0 0 1 4-4c0 2.5-2 4.5-4 4z"/></svg>
+            </div>
+            <h3>Unshakeable Discipline</h3>
+            <p>Build the internal structure that keeps you moving — even when motivation runs dry.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+            </div>
+            <h3>Habits That Compound</h3>
+            <p>Design small, consistent actions that create real results over time.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Sharpened Focus</h3>
+            <p>Cut through the noise and direct your energy toward what genuinely matters.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="8 14 10 16 16 11"/></svg>
+            </div>
+            <h3>Real Productivity</h3>
+            <p>Stop confusing busy with effective. Build a system that produces real output.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3>Grounded Confidence</h3>
+            <p>Self-assurance rooted in who you're becoming — not what others think of you.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="benefit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h3>Clearer Mindset</h3>
+            <p>See your situation honestly, think through decisions calmly, and act with intention.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PREVIEW  — premium placeholder, ready for real pages
+    ============================================================ -->
+    <section class="preview section" id="preview">
+      <div class="container">
+        <div class="section-label" data-animate="fade-up">Book Preview</div>
+        <h2 class="section-title" data-animate="fade-up">
+          A glimpse inside<br />the pages.
+        </h2>
+        <div class="preview__placeholder" data-animate="fade-up">
+          <div class="preview__placeholder-frame">
+            <div class="preview__placeholder-inner">
+              <svg class="preview__placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+              <p class="preview__placeholder-title">Preview pages coming soon</p>
+              <p class="preview__placeholder-sub">
+                Real excerpts from the book will appear here.<br />
+                Replace this block with your actual preview images or text.
+              </p>
+            </div>
+          </div>
+          <!-- ── HOW TO ADD YOUR PREVIEW ──────────────────────────────
+               Option A – Images: replace the frame above with:
+               <img src="preview-page-1.jpg" alt="Book preview page 1" class="preview__page-img" />
+               <img src="preview-page-2.jpg" alt="Book preview page 2" class="preview__page-img" />
+
+               Option B – Text excerpts: use .preview__grid with .preview-card elements.
+               See the original design in the README for card markup.
+          ─────────────────────────────────────────────────────────── -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHY THIS BOOK
+    ============================================================ -->
+    <section class="why section section--alt" id="why">
+      <div class="container why__inner">
+        <div class="why__text" data-animate="fade-up">
+          <div class="section-label">Why This Book?</div>
+          <h2 class="section-title">Different by design.<br /><em>Not by claim.</em></h2>
+          <p>The self-improvement space is full of books long on inspiration and short on instruction.</p>
+          <p>This one is built differently — for people who've already tried the inspiration and are ready for the work.</p>
+        </div>
+        <div class="why__list" data-animate="stagger">
+          <div class="why-item">
+            <div class="why-item__dot"></div>
+            <div>
+              <strong>No fluff, no filler.</strong>
+              <p>Every page earns its place. Direct, clear, built to be retained.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__dot"></div>
+            <div>
+              <strong>Actionable from page one.</strong>
+              <p>You don't have to finish to start seeing results. Each section ends with a concrete exercise.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__dot"></div>
+            <div>
+              <strong>Grounded in what works.</strong>
+              <p>Frameworks drawn from behavioral science and real-world application — not assembled from trends.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__dot"></div>
+            <div>
+              <strong>Written for real life.</strong>
+              <p>No 5 AM cold-plunge culture. Just practical ideas that work around an actual human schedule.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHAT'S INSIDE  — new section
+    ============================================================ -->
+    <section class="whats-inside section" id="whats-inside">
+      <div class="container">
+        <div class="section-label" data-animate="fade-up">What's Inside</div>
+        <h2 class="section-title" data-animate="fade-up">
+          Everything you need.<br /><em>Nothing you don't.</em>
+        </h2>
+        <div class="inside__grid" data-animate="stagger">
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3>Practical Frameworks</h3>
+            <p>Structured models you can apply immediately — no interpretation required.</p>
+          </div>
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3>Actionable Exercises</h3>
+            <p>Short, focused tasks at the end of each section to put ideas into practice right away.</p>
+          </div>
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </div>
+            <h3>Step-by-Step Guidance</h3>
+            <p>Clear, sequential instruction that removes the guesswork from getting started.</p>
+          </div>
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h3>Easy-to-Follow Strategies</h3>
+            <p>Ideas that are simple to understand and straightforward to act on — even on a busy day.</p>
+          </div>
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Real-World Examples</h3>
+            <p>Concepts illustrated through recognisable, everyday situations — not abstract theory.</p>
+          </div>
+          <div class="inside-card">
+            <div class="inside-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3>Concise, Honest Writing</h3>
+            <p>No filler. Every sentence earns its place. Designed to be read once and applied for years.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         REVIEWS COMING SOON
+         Hidden behind a data-hidden attribute — remove it and
+         uncomment the testimonials + review form below when you
+         have real customer feedback to display.
+    ============================================================ -->
+    <section class="reviews-soon section section--alt" id="reviews" data-animate="fade-up">
+      <div class="container reviews-soon__inner">
+        <div class="section-label">Reader Reviews</div>
+        <h2 class="section-title">Reviews coming soon.</h2>
+        <p class="reviews-soon__sub">
+          The book is freshly launched. Real reader reviews will appear here as they come in.
+        </p>
+        <div class="reviews-soon__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         TO ACTIVATE TESTIMONIALS + REVIEW FORM:
+         1. Delete the section above (reviews-soon).
+         2. Uncomment the two sections below.
+         3. Replace placeholder content with real reviews.
+    ══════════════════════════════════════════════════════════════ -->
+
+    <!--
+    <section class="testimonials section" id="testimonials">
+      <div class="container">
+        <div class="section-label">Reader Stories</div>
+        <h2 class="section-title">What readers are saying.</h2>
+        <div class="testimonials__grid">
+          Add real testimonial-card blocks here
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews section section--alt">
+      <div class="container reviews__inner">
+        <div class="section-label">Leave a Review</div>
+        <h2 class="section-title">Share your experience.</h2>
+        Add review form here — markup is in the original version
+      </div>
+    </section>
+    -->
+
+    <!-- ============================================================
+         PRICING
+    ============================================================ -->
+    <section class="pricing section" id="pricing">
+      <div class="container pricing__inner">
+        <div class="section-label" data-animate="fade-up">Get the Book</div>
+        <h2 class="section-title" data-animate="fade-up">One price.<br />Lifetime value.</h2>
+
+        <div class="pricing-card" data-animate="fade-up">
+          <div class="pricing-card__top">
+            <div class="pricing-card__badge">Digital Edition</div>
+            <div class="pricing-card__price">
+              <span class="pricing-card__currency">$</span>9.99
+            </div>
+            <p class="pricing-card__desc">Everything you need to start your growth journey today.</p>
+          </div>
+          <ul class="pricing-card__features">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Instant Digital Download
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              PDF Format — Read Anywhere
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Phone, Tablet &amp; Computer
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Lifetime Access — No Subscriptions
+            </li>
+          </ul>
+          <div class="pricing-card__ctas">
+            <a
+              href="https://wa.me/212614350102?text=Hello!%20I%20would%20like%20to%20purchase%20your%20book%20for%20%249.99."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary btn--xl btn--full"
+            >
+              $9.99
+            </a>
+            <button
+              type="button"
+              class="btn btn--outline btn--xl btn--full"
+              id="freeBtn"
+            >
+              Get it Free
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+    ============================================================ -->
+    <section class="faq section section--alt" id="faq">
+      <div class="container faq__inner">
+        <div class="section-label" data-animate="fade-up">FAQ</div>
+        <h2 class="section-title" data-animate="fade-up">Common questions.</h2>
+
+        <div class="faq__list" data-animate="stagger">
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              What format is the book in?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">The book is delivered as a PDF — compatible with any device or PDF reader. Phone, tablet, laptop, or desktop. No special software required.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              How do I receive the book after purchasing?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">Your download link will be sent to you directly and promptly after purchase. The process is fast and straightforward.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              Is this book suitable for beginners?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">Yes. The book is written to be accessible whether you're new to self-improvement or refining what you already know. It meets you where you are.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              How long is the book?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">It's concise by design — thorough enough to be complete, short enough to respect your time. Every page is intentional, with no filler.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              What if I'm not satisfied?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">If the book didn't meet your expectations, reach out and we'll do our best to make it right. We stand behind what we've made.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              Can I read it on my phone?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">Yes — fully readable on any smartphone using built-in file viewers or a free PDF reader. No additional purchases needed.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              What makes this different from free content online?
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">Free content is scattered and optimised for clicks, not clarity. This is a single, coherent guide — built to be read from start to finish and applied systematically.</p>
+          </details>
+
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <!-- MODAL -->
-  <div id="modal" class="modal">
-    <div class="modal-box">
-      <h3>Popular Books</h3>
-      <p>Coming Soon</p>
-      <button id="closeModal">Close</button>
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="footer__logo">Modifya</a>
+        <p>A self-improvement guide for people serious about growth.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="#benefits">Benefits</a>
+        <a href="#preview">Preview</a>
+        <a href="#whats-inside">Inside</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
     </div>
-  </div>
+    <div class="footer__bottom container">
+      <p>&copy; <span id="footerYear"></span> Modifya. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
