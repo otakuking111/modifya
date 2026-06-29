@@ -412,3 +412,40 @@ body {
   cursor: pointer;
   border-radius: 6px;
 }
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.search-wrapper {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.theme-toggle {
+  margin-left: 10px;
+}
+
+.menu-toggle {
+  margin-left: 10px;
+}
+body {
+  color: var(--text);
+}
+
+/* يخلي كل الكتابة باينة */
+h1, h2, h3, p, span, a, li {
+  color: var(--text);
+}
+
+/* input search */
+input {
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #333;
+}
+* {
+  transition: background 0.3s ease, color 0.3s ease;
+}
