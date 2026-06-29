@@ -1307,3 +1307,39 @@ ul { list-style: none; }
   border-color: #1EBE57 !important;
   color: #ffffff !important;
 }
+
+.preview-book{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:0;
+  margin-top:50px;
+  perspective:1200px;
+}
+
+.preview-book img{
+  width:280px;
+  max-width:45%;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+  transition:0.3s;
+}
+
+.preview-book img:first-child{
+  transform:rotateY(12deg);
+  transform-origin:right;
+}
+
+.preview-book img:last-child{
+  transform:rotateY(-12deg);
+  transform-origin:left;
+}
+
+.preview-book img:hover{
+  transform:rotateY(0deg) scale(1.03);
+}
+
+@media (max-width:768px){
+  .preview-book img{
+      width:48%;
+  }
+}
