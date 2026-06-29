@@ -340,13 +340,13 @@ ul { list-style: none; }
   font-size: clamp(2.6rem, 5.5vw, 4.4rem);
   font-weight: 600;
   line-height: 1.1;
-  color: var(--gold);
+  color: var(--text-primary);
   margin-bottom: 28px;
   letter-spacing: -0.02em;
 }
 
 .hero__title-placeholder {
-  color: var(--text-muted);
+  color: var(--gold);
   font-style: italic;
   border-bottom: 1px dashed var(--border);
   padding-bottom: 4px;
