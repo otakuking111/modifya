@@ -1343,3 +1343,12 @@ ul { list-style: none; }
       width:48%;
   }
 }
+
+#payBtn{
+  background:#2563eb !important;
+  color:white !important;
+}
+
+#payBtn:hover{
+  background:#1d4ed8 !important;
+}
