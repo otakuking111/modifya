@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reset — modifya.store</title>
+    <style>
+        /* --- إعدادات الخطوط والأنماط الأساسية --- */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --bg-color: #0c0c0c;
+            --text-color: #e5c158; /* لون ذهبي دافئ ومريح للعين */
+            --headings-color: #ffffff; /* لون العناوين الافتراضي في الوضع المظلم */
+            --accent-color: #b89030;
+            --card-bg: #161616;
+            --border-color: rgba(229, 193, 88, 0.2);
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Playfair Display', serif;
+            --font-sans: 'Poppins', sans-serif;
+            --max-width: 740px;
+        }
+
+        /* --- أنماط الوضع الفاتح (White Mode) --- */
+        html.white-mode {
+            --bg-color: #fcfbf7;
+            --text-color: #222222;
+            --headings-color: #8c6212; /* لون عناوين ذهبي ملكي غامق يناسب الخلفية الفاتحة */
+            --accent-color: #b89030;
+            --card-bg: #f4f1ea;
+            --border-color: rgba(140, 98, 18, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            line-height: 1.8;
+            font-size: 1.25rem;
+            padding: 40px 20px;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- حاوية الكتاب الرئيسية --- */
+        .book-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        html.white-mode .book-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- الترويسة العلوية للموقع --- */
+        .site-header {
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            padding-bottom: 15px;
+            border-bottom: 1px double var(--border-color);
+            opacity: 0.8;
+        }
+
+        .site-header a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- العناوين والفواصل --- */
+        h1, h2, h3 {
+            font-family: var(--font-title);
+            color: var(--headings-color);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .book-main-title {
+            font-size: 3.5rem;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .book-subtitle {
+            font-size: 1.4rem;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h2.section-title {
+            font-size: 2.2rem;
+            margin-top: 80px;
+            margin-bottom: 20px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .reset-number {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            letter-spacing: 4px;
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        h3.chapter-subtitle {
+            font-size: 1.5rem;
+            margin: 35px 0 20px 0;
+            text-align: left;
+            font-style: italic;
+        }
+
+        /* --- الفهرس (Contents) --- */
+        .table-of-contents {
+            margin: 60px 0;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .toc-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(229, 193, 88, 0.1);
+        }
+
+        html.white-mode .toc-item {
+            border-bottom: 1px dashed rgba(140, 98, 18, 0.1);
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-link {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+        }
+
+        .toc-link:hover {
+            color: var(--headings-color);
+        }
+
+        .toc-desc {
+            display: block;
+            font-size: 1.05rem;
+            font-family: var(--font-body);
+            font-style: italic;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* --- النصوص والفقرات --- */
+        p {
+            margin-bottom: 25px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .book-intro-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            text-align: center;
+            margin: 40px 0;
+            color: var(--headings-color);
+            line-height: 1.6;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            letter-spacing: 5px;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .question-list {
+            margin: 30px 0 30px 20px;
+            list-style-type: none;
+        }
+
+        .question-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        .question-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* --- زر تغيير الوضع (White Mode Toggle) --- */
+        .mode-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 20px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- تحسين الشاشات الصغيرة (الهواتف) --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+                font-size: 1.15rem;
+            }
+            .book-container {
+                padding: 20px 15px;
+            }
+            .book-main-title {
+                font-size: 2.5rem;
+            }
+            h2.section-title {
+                font-size: 1.8rem;
+            }
+            h3.chapter-subtitle {
+                text-align: left;
+            }
+            .mode-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="mode-toggle-btn" id="modeToggle" onclick="toggleMode()">
+        <span id="toggleText">☀️ White Mode</span>
+    </button>
+
+    <div class="book-container">
+        
+        <header class="site-header">
+            Published Exclusively on <a href="https://modifya.store">modifya.store</a>
+        </header>
+
+        <section style="text-align: center; margin-bottom: 80px;">
+            <h1 class="book-main-title">THE<br>RESET</h1>
+            <div class="book-subtitle">The guide to escaping anxiety, rebuilding yourself, and taking back control of your life.</div>
+        </section>
+
+        <nav class="table-of-contents">
+            <h2 class="toc-title">Contents</h2>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#reset1" class="toc-link">Reset 1 : Wake Up</a>
+                    <span class="toc-desc">For those who feel lost, disconnected, and unsure why life feels so heavy.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset2" class="toc-link">Reset 2 : Break the Chains</a>
+                    <span class="toc-desc">For those struggling with addiction, destructive habits, or feeling trapped by their own choices.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset3" class="toc-link">Reset 3 : Silence the Noise</a>
+                    <span class="toc-desc">For those overwhelmed by anxiety, overthinking, fear, and constant mental pressure.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset4" class="toc-link">Reset 4 : Know Your Worth</a>
+                    <span class="toc-desc">For those who doubt themselves, seek validation, or have forgotten their true value.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset5" class="toc-link">Reset 5 : Cut the Poison</a>
+                    <span class="toc-desc">For those surrounded by toxic relationships, manipulation, or people who steal their peace.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset6" class="toc-link">Reset 6 : Build Discipline</a>
+                    <span class="toc-desc">For those who keep starting over, procrastinate, or struggle to stay consistent.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset7" class="toc-link">Reset 7 : Rebuild Your Mind</a>
+                    <span class="toc-desc">For those held back by negative thoughts, limiting beliefs, and self-sabotage.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset8" class="toc-link">Reset 8 : Find Your Direction</a>
+                    <span class="toc-desc">For those who feel stuck, without purpose, or uncertain about where life is leading them.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset9" class="toc-link">Reset 9 : Become Unstoppable</a>
+                    <span class="toc-desc">For those ready to build confidence, resilience, and the courage to take control of their future.</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#reset10" class="toc-link">Reset 10 : The New You</a>
+                    <span class="toc-desc">For those who are ready to leave the past behind and build a life they can truly be proud of.</span>
+                </li>
+            </ul>
+        </nav>
+
+        <article style="margin-top: 60px;">
+            <h2 style="font-family: var(--font-title); font-size: 2rem; margin-bottom: 30px;">Before You Begin</h2>
+            <p class="book-intro-quote">You are not broken. You are overloaded.</p>
+            <p>Somewhere along the way, life became heavier than it should be. Thoughts got louder. Habits got harder to control. And the version of you that once felt clear, confident, and alive started to fade into the background of your own existence.</p>
+            <p>You kept going. You kept showing up. But something inside you knew — this is not how it was supposed to feel.</p>
+            <p>This book is not here to inspire you for a moment and then leave you where it found you. It is not a collection of nice words designed to make you feel good for twenty minutes before the weight returns.</p>
+            <p>This book is here to help you reset — what is weighing you down, what is holding you back, what is quietly destroying the life you deserve. Step by step. Without noise. Without illusion. Without pretending that change is easy when you know, deep down, that it demands something real from you.</p>
+            
+            <div class="divider">— — —</div>
+            
+            <p>There are ten resets in this book.</p>
+            <p>Each one targets a different dimension of your life — your mind, your habits, your relationships, your identity, your direction, your future. You can read them in order or go directly to the one that speaks to what you are carrying right now.</p>
+            <p>But do not just read. Apply. The words on these pages only become useful when you take them off the page and into your days.</p>
+            <p>If you are here, it means something in you is ready to change. Not tomorrow. Not someday. Now.</p>
+            <p>This is your reset.</p>
+        </article>
+
+        <section id="reset1">
+            <span class="reset-number">Reset 1</span>
+            <h2 class="section-title">Wake Up</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who feel lost, disconnected, and unsure why life feels so heavy.</p>
+            
+            <h3 class="chapter-subtitle">The Weight You Cannot Name</h3>
+            <p>You wake up and something already feels wrong — but you cannot say what it is. The day has not even started and there is already a pressure in your chest, a fog behind your eyes, a quiet voice whispering that today will be exactly like yesterday.</p>
+            <p>You are not in crisis. You are not falling apart in any obvious way. From the outside, everything looks fine. But from the inside, you feel like you have been slowly losing yourself — your energy, your joy, your sense of who you are and where you are going.</p>
+            <p>This feeling has a name. It is disconnection. And it is far more common — and far more damaging — than most people admit.</p>
+            
+            <h3 class="chapter-subtitle">How We Fall Asleep to Our Own Lives</h3>
+            <p>No one chooses to become numb. It happens gradually, almost invisibly. You start making small compromises — saying yes when you mean no, staying in situations that no longer serve you, scrolling instead of thinking, distracting instead of feeling. Each choice seems harmless. Over time, they become a way of life.</p>
+            <p>The brain is efficient. When something becomes a habit — even a destructive one — it stops requiring your full attention. You go through the motions. You perform your life rather than live it. And slowly, the gap between who you are and who you want to be grows wider and wider.</p>
+            <p>Waking up means closing that gap. It means becoming honest about where you actually are — not where you wish you were, not where you tell people you are — but where you truly are right now.</p>
+            
+            <h3 class="chapter-subtitle">The Honest Inventory</h3>
+            <p>Before anything else can change, you need to see clearly. Not harshly. Not with judgment. Simply honestly.</p>
+            <p>Ask yourself:</p>
+            <ul class="question-list">
+                <li>When did I last feel genuinely alive — not just occupied, but truly present and awake?</li>
+                <li>What am I tolerating in my life that I have stopped questioning?</li>
+                <li>What is the gap between the person I am showing the world and the person I feel like inside?</li>
+                <li>What am I afraid to admit — even to myself?</li>
+            </ul>
+            <p>These questions are not comfortable. That discomfort is information. It is telling you that something in you already knows the truth and has been waiting for permission to say it.</p>
+            
+            <h3 class="chapter-subtitle">The Moment of Clarity</h3>
+            <p>Waking up does not always feel like a sunrise. Sometimes it feels like a cold shock — a moment when you look at your life and realize you have been sleepwalking through it. That moment can come from pain, from loss, from an unexpected conversation, or from simply sitting quietly long enough to hear yourself think.</p>
+            <p>Whatever brings you to this moment, do not run from it. This is the beginning.</p>
+            <p>The most important thing you will ever do is decide to see clearly — even when what you see is hard.</p>
+            <p>You cannot reset what you refuse to look at. But once you look — really look — everything becomes possible.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Today, do one thing that your sleepwalking self would have skipped. Write a single honest sentence about where you are. Not where you want to be — where you are. No performance. No softening. Just the truth.</p>
+            <p>That sentence is the beginning of your reset.</p>
+        </section>
+
+        <section id="reset2">
+            <span class="reset-number">Reset 2</span>
+            <h2 class="section-title">Break the Chains</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those struggling with addiction, destructive habits, or feeling trapped by their own choices.</p>
+            
+            <h3 class="chapter-subtitle">The Trap That Feels Like Comfort</h3>
+            <p>Every chain starts as a solution. You found something that made the pain quieter, the anxiety smaller, the loneliness less sharp. And it worked — at first. That is the nature of every destructive habit: it solves something real, even as it creates something worse.</p>
+            <p>Whether it is substances, screens, food, gambling, rage, avoidance, or the constant chase of something that never satisfies — the pattern is the same. The relief is real. The cost is hidden until it is not. And by the time the cost becomes visible, the chain is already around you.</p>
+            
+            <h3 class="chapter-subtitle">Understanding Your Loop</h3>
+            <p>Every habit, good or bad, follows a loop: a trigger, a behavior, and a reward. The trigger is the cue that starts the craving — stress, boredom, loneliness, a specific time of day, a certain emotion. The behavior is the action you take. The reward is what the behavior gives you, even temporarily.</p>
+            <p>To break a chain, you do not need willpower alone. You need to understand your loop so completely that you can interrupt it at the right moment.</p>
+            <p>Ask yourself:</p>
+            <ul class="question-list">
+                <li>What triggers this behavior in me? Be specific. What happens just before I reach for it?</li>
+                <li>What does it give me in the moment — what does it feel like to have it?</li>
+                <li>What does it cost me one hour later? One day later? One year from now?</li>
+            </ul>
+            <p>Most people live inside the loop without ever stepping outside it to observe it. The moment you observe the loop from the outside, you gain power over it.</p>
+            
+            <h3 class="chapter-subtitle">The Withdrawal Before the Freedom</h3>
+            <p>Here is something no one tells you enough: breaking a pattern feels terrible before it feels better. Your nervous system has been calibrated around the behavior. Removing it creates a gap — and that gap fills with discomfort, irritability, craving, and a voice that will say anything to get you to go back.</p>
+            <p>That voice is not wisdom. It is withdrawal. It is the old system fighting to survive. The discomfort is not a sign that you are failing. It is a sign that the chain is actually breaking.</p>
+            <p>Every craving that you outlast makes the next one weaker. Every time you go back, the chain gets stronger.</p>
+            
+            <h3 class="chapter-subtitle">What to Replace, Not Just Remove</h3>
+            <p>Removing a habit without replacing it leaves a void that the habit will rush back to fill. What will you put in its place? Not a hollow substitute — a genuine alternative that addresses the same underlying need.</p>
+            <p>If the habit quiets anxiety, what else can quiet anxiety? If it fills loneliness, what else can fill connection? If it gives you a sense of control, where else in your life can you build that control?</p>
+            <p>Breaking chains is not about subtraction. It is about rebuilding the foundation.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Name one chain. Just one. Write down its trigger, its reward, and its real cost. Then identify one moment in the next twenty-four hours when you can choose differently — not forever, just once.</p>
+            <p>Once is enough to start.</p>
+        </section>
+
+        <section id="reset3">
+            <span class="reset-number">Reset 3</span>
+            <h2 class="section-title">Silence the Noise</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those overwhelmed by anxiety, overthinking, fear, and constant mental pressure.</p>
+            
+            <h3 class="chapter-subtitle">The Mind That Will Not Stop</h3>
+            <p>You are lying in bed at two in the morning, running the same conversation through your head for the fourth time. You are in the middle of a meal and your brain is already three days ahead, cataloguing everything that could go wrong. You are trying to be present but your mind is somewhere between last week's mistake and next month's disaster.</p>
+            <p>This is not a character flaw. This is an anxious mind doing exactly what it was designed to do — scan for threats, rehearse scenarios, prepare for the worst. The problem is that the brain cannot always tell the difference between a real danger and an imagined one. It treats both with the same alarm.</p>
+            
+            <h3 class="chapter-subtitle">The Overthinking Spiral</h3>
+            <p>Overthinking is not deep thinking. It is repetitive thinking. The same thought, circling, gaining weight with each rotation, producing no new insight but an increasing sense of dread.</p>
+            <p>The spiral has a particular cruelty: it makes you feel like you are solving something. You are not. You are rehearsing fear. Every loop adds another layer of anxiety without moving you a single step closer to clarity or action.</p>
+            <p>The exit from the spiral is not through it. It is out of it entirely.</p>
+            
+            <h3 class="chapter-subtitle">The Three Moves That Actually Help</h3>
+            <p>First: name it. When the spiral starts, say — out loud or in writing — 'I am overthinking right now. My brain is in threat mode.' Naming what is happening activates the rational part of your brain and weakens the emotional grip of the spiral.</p>
+            <p>Second: move. Anxiety is physical energy that has nowhere to go. A short walk, ten push-ups, even standing up and shaking your hands — these are not distractions. They are physiological resets that signal safety to your nervous system.</p>
+            <p>Third: ask the useful question. Not 'what if this goes wrong?' but 'what is the one thing I can do right now that would actually help?' Replace looping with a single, actionable next step.</p>
+            
+            <h3 class="chapter-subtitle">The Role of Silence</h3>
+            <p>The modern world is allergic to silence. We fill every pause with noise — podcasts, scrolling, background TV, the constant low hum of stimulation. And in doing so, we never give the mind the space it needs to settle.</p>
+            <p>Silence is not emptiness. It is where clarity lives. Even ten minutes of deliberate quiet — sitting, breathing, not consuming — trains the nervous system to operate at a lower baseline of anxiety.</p>
+            <p>You cannot think your way out of overthinking. You can only step outside the noise long enough to hear what is actually true.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Today, sit in silence for ten minutes. No phone. No music. No input. Just you and your breath. If the mind races, let it. Do not fight it. Simply observe. This is the first act of reclaiming your own mind.</p>
+        </section>
+
+        <section id="reset4">
+            <span class="reset-number">Reset 4</span>
+            <h2 class="section-title">Know Your Worth</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who doubt themselves, seek validation, or have forgotten their true value.</p>
+            
+            <h3 class="chapter-subtitle">The Approval Trap</h3>
+            <p>Somewhere along the way, you learned that your worth was something you had to earn. Maybe it was a parent whose love felt conditional. A school that ranked you. A relationship that made you feel like you were never quite enough. A world that measured you in metrics that had nothing to do with who you actually are.</p>
+            <p>And so you started working for approval. Shrinking yourself to fit spaces that were not made for you. Editing your opinions before you said them. Watching other people's reactions to calibrate how much of yourself was safe to show.</p>
+            <p>The tragedy is not that you wanted to be loved. The tragedy is that in the search for it, you started to abandon yourself.</p>
+            
+            <h3 class="chapter-subtitle">The Difference Between Confidence and Arrogance</h3>
+            <p>Real confidence is quiet. It does not need to announce itself. It does not require other people to fail so it can succeed. It is simply a settled knowledge of your own value — not because you are perfect, but because you are inherently worthy of respect, love, and dignity.</p>
+            <p>Arrogance is confidence built on fear. It is the performance of worth to cover the terror of worthlessness. It is loud and brittle. Real confidence is calm and unshakeable.</p>
+            <p>You are not chasing arrogance. You are recovering confidence. And the difference matters.</p>
+            
+            <h3 class="chapter-subtitle">Where Your Worth Actually Lives</h3>
+            <p>Your worth is not in your productivity. It is not in how much you earn or how impressive your resume looks. It is not in whether someone chose you or left you. It is not in your body, your past, your mistakes, or your achievements.</p>
+            <p>Your worth is not something you build. It is something you remember.</p>
+            <p>You arrived in this world worthy. Everything since then has been a test of whether you remember it.</p>
+            <p>The work of this reset is not to become worthy. It is to stop believing the voices that told you that you were not.</p>
+            
+            <h3 class="chapter-subtitle">The Practice of Self-Respect</h3>
+            <p>Self-worth is rebuilt through small, consistent acts of self-respect. Every time you honor your own needs, speak your truth, keep a promise to yourself, set a boundary, or choose yourself in a moment when you would normally erase yourself — you are restoring what was taken.</p>
+            <p>This is not self-obsession. It is the foundation. You cannot give what you do not have. You cannot love well from a place of self-abandonment.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Write three things you would never allow someone to say to your best friend — and then notice if you say them to yourself. Choose one to stop. Start there.</p>
+        </section>
+
+        <section id="reset5">
+            <span class="reset-number">Reset 5</span>
+            <h2 class="section-title">Cut the Poison</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those surrounded by toxic relationships, manipulation, or people who steal their peace.</p>
+            
+            <h3 class="chapter-subtitle">The Slow Drain</h3>
+            <p>Not all damage is dramatic. Some of the worst comes quietly, in relationships that drain you so gradually you barely notice — until one day you realize that around certain people, you always feel smaller, more anxious, more exhausted, more unsure of yourself.</p>
+            <p>Toxic does not always mean cruel. It can mean someone who is chronically negative, who needs you to be weak to feel strong, who fills your space with their chaos, who makes your peace conditional on their mood, who takes more than they give in ways so subtle that questioning it makes you feel like the problem.</p>
+            
+            <h3 class="chapter-subtitle">Recognizing the Signs</h3>
+            <p>You feel a sense of relief when they cancel plans. You rehearse what you are going to say before seeing them. You come away from conversations feeling drained, guilty, confused, or smaller. You have changed your behavior to manage their reactions. You defend them to yourself and others more than the relationship actually deserves.</p>
+            <p>These are not signs of a difficult season in a good relationship. These are signs of a relationship that is costing you more than it is giving.</p>
+            
+            <h3 class="chapter-subtitle">The Guilt Is Not Proof You Are Wrong</h3>
+            <p>One of the most powerful tools of toxic relationships is the guilt they generate. When you consider leaving, pulling back, or setting a boundary, the guilt arrives — and it feels like evidence. Surely if it were right to leave, it would not feel this bad.</p>
+            <p>But guilt is not a moral compass. In unhealthy relationships, guilt is often the mechanism of control. The feeling that you owe someone more than you do, that you are responsible for their emotional state, that choosing yourself is selfish — these are feelings that were put there deliberately or unconsciously to keep you stuck.</p>
+            <p>Protecting your peace is not cruelty. It is survival. Some people will call it abandonment because they have benefited from your lack of boundaries.</p>
+            
+            <h3 class="chapter-subtitle">The Exit and the Distance</h3>
+            <p>Not every toxic relationship ends with a dramatic confrontation. Some simply fade through gentle, consistent distance. Some end with a clear, honest conversation. Some require full removal. The approach depends on the relationship, the history, and the safety involved.</p>
+            <p>What matters is not the method but the decision. The decision that your peace, your clarity, and your wellbeing are not negotiable — and that you are done trading them for relationships that damage you.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Name one relationship in your life that consistently leaves you feeling worse, not better. You do not have to do anything yet. Simply name it — and be honest with yourself about what it is costing you.</p>
+        </section>
+
+        <section id="reset6">
+            <span class="reset-number">Reset 6</span>
+            <h2 class="section-title">Build Discipline</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who keep starting over, procrastinate, or struggle to stay consistent.</p>
+            
+            <h3 class="chapter-subtitle">The Motivation Lie</h3>
+            <p>You have been waiting for motivation. You know the feeling — that surge of energy and clarity that makes everything feel possible, where you can sit down and work for hours and it feels effortless. You have been waiting for that feeling to arrive before you begin.</p>
+            <p>The lie is this: motivation follows action. It does not precede it. Waiting for motivation to start is like waiting for the fire to appear before you strike the match.</p>
+            <p>Discipline is the match.</p>
+            
+            <h3 class="chapter-subtitle">Why Willpower Alone Always Fails</h3>
+            <p>Willpower is a finite resource. It is highest in the morning and depletes through the day with every decision, every temptation resisted, every difficult interaction. Trying to build a life on willpower alone is like building a house on sand — it works until the conditions change.</p>
+            <p>The people who appear most disciplined are not people with more willpower. They are people who have built systems that require less of it. Their environment is designed to make the right choice the easy choice.</p>
+            
+            <h3 class="chapter-subtitle">The Architecture of Discipline</h3>
+            <p>Start small — embarrassingly small. If you want to write, write one sentence. If you want to exercise, put on your shoes. If you want to read, open the book and read one paragraph. The action itself is almost laughably minimal. But showing up consistently at that minimal level builds something willpower never can: identity.</p>
+            <p>When you show up every day — even for five minutes, even imperfectly — you stop being someone who is trying to change and start being someone who already has. That identity becomes its own motivation.</p>
+            <p>Consistency beats intensity every time. The person who shows up every day beats the person who shows up brilliantly once a month.</p>
+            
+            <h3 class="chapter-subtitle">Remove the Friction</h3>
+            <p>Every behavior has friction — the gap between wanting to do something and actually doing it. Discipline is partly about reducing that friction for good behaviors and increasing it for destructive ones.</p>
+            <p>Put your running shoes by the door. Keep your journal open on your desk. Delete the apps that swallow your hours. Rearrange your environment so that your best choices are the path of least resistance, not the ones that require maximum effort to execute.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Choose one thing you have been starting and stopping. Reduce it to its smallest possible form — something you could do in under two minutes. Then do it right now. Not tomorrow. Right now. That is the beginning of your discipline.</p>
+        </section>
+
+        <section id="reset7">
+            <span class="reset-number">Reset 7</span>
+            <h2 class="section-title">Rebuild Your Mind</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those held back by negative thoughts, limiting beliefs, and self-sabotage.</p>
+            
+            <h3 class="chapter-subtitle">The Beliefs That Run Your Life</h3>
+            <p>You have a set of beliefs about yourself that were formed long before you were old enough to evaluate them. Some were given to you by parents. Some by experiences. Some by a moment of failure or rejection that wrote itself into your operating system as permanent truth.</p>
+            <p>'I am not smart enough.' 'Good things do not last for people like me.' 'I will always find a way to ruin it.' 'I do not deserve that.'</p>
+            <p>These are not facts. They are conclusions drawn by a younger, more vulnerable version of you — and they have been running your life ever since.</p>
+            
+            <h3 class="chapter-subtitle">How Self-Sabotage Works</h3>
+            <p>Self-sabotage is not weakness. It is protection. When the belief system says you do not deserve success, the mind will find a way to confirm it — not because it wants you to suffer, but because it wants to be right. The familiar is safer than the unknown, even when the familiar is painful.</p>
+            <p>This is why you pull back when things are going well. Why you create problems in good relationships. Why you stop just before the finish line. It is not failure. It is the old belief system defending itself.</p>
+            <p>You are not self-destructive. You are self-confirming. The question is: which story are you confirming?</p>
+            
+            <h3 class="chapter-subtitle">Interrupting the Pattern</h3>
+            <p>You cannot think your way out of a limiting belief by thinking more. You interrupt it through action. Every time you act in contradiction to the limiting belief — every time you try even though you believe you will fail, every time you stay even though you believe you will be left — you create new evidence.</p>
+            <p>The brain is neuroplastic. It rewires based on repeated experience. Give it enough contradictory experience and the old belief begins to loosen its grip.</p>
+            
+            <h3 class="chapter-subtitle">The New Narrative</h3>
+            <p>You are not trying to convince yourself of something false. You are trying to tell a more complete story — one that includes not just your failures but your resilience, not just your wounds but your strength, not just where you fell but how many times you got back up.</p>
+            <p>The new narrative is not optimistic delusion. It is honest accounting. And in honest accounting, most of us have far more going for us than our worst moments suggest.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Identify one belief that limits you. Write it down exactly as it sounds in your head. Then write three pieces of genuine evidence that contradict it. Not wishful thinking — actual evidence from your actual life. This is the beginning of dismantling it.</p>
+        </section>
+
+        <section id="reset8">
+            <span class="reset-number">Reset 8</span>
+            <h2 class="section-title">Find Your Direction</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who feel stuck, without purpose, or uncertain about where life is leading them.</p>
+            
+            <h3 class="chapter-subtitle">The Paralysis of Not Knowing</h3>
+            <p>You want to move but you do not know where to go. You want to build something but you cannot see what it should be. You look at other people who seem to know exactly who they are and what they are for, and you wonder why that clarity has never arrived for you.</p>
+            <p>Here is what those people rarely admit: clarity is almost never given. It is discovered — through action, through failure, through trying enough things that the shape of what matters begins to emerge.</p>
+            <p>Waiting for certainty before moving is one of the most effective ways to ensure that nothing ever changes.</p>
+            
+            <h3 class="chapter-subtitle">What Purpose Actually Is</h3>
+            <p>Purpose is not a dramatic revelation. It is not a single calling written in the stars that you must discover or else fail at life. It is quieter and more personal than that.</p>
+            <p>Purpose is the intersection of what you value, what you are drawn to, and what the world around you actually needs. It is found not by looking inward alone but by looking at the relationship between who you are and how you choose to engage with the world.</p>
+            <p>You do not find your purpose by thinking about it. You find it by moving toward what feels alive in you and paying attention.</p>
+            
+            <h3 class="chapter-subtitle">The Experiment Mindset</h3>
+            <p>Replace the question 'what is my purpose?' with 'what am I curious about enough to try?' Purpose is rarely visible from a distance. It reveals itself through engagement. Try things. Notice what energizes you and what drains you, what makes time move differently, what you would do even if no one was watching and no one was paying.</p>
+            <p>Treat your life like a series of honest experiments rather than a performance you have to get right the first time.</p>
+            
+            <h3 class="chapter-subtitle">Small Direction Beats No Direction</h3>
+            <p>You do not need a ten-year plan. You need a next step — something concrete, executable, and aligned with something you actually care about. One step in a direction that feels true is worth more than a hundred perfectly planned steps in a direction that means nothing to you.</p>
+            <p>Move. Adjust. Move again. Direction becomes clearer in motion than it ever does in stillness.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Write down three things you have been curious about but have never seriously pursued. Choose one. Find out what the smallest possible version of trying it looks like. Do that this week.</p>
+        </section>
+
+        <section id="reset9">
+            <span class="reset-number">Reset 9</span>
+            <h2 class="section-title">Become Unstoppable</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those ready to build confidence, resilience, and the courage to take control of their future.</p>
+            
+            <h3 class="chapter-subtitle">The Anatomy of Resilience</h3>
+            <p>Resilience is not the absence of difficulty. It is not the ability to feel no pain. It is not some superhuman immunity to failure and loss and setbacks. It is something far more practical: the ability to return.</p>
+            <p>The resilient person falls. They feel it fully. And then they get up again — not because they are unafraid, but because they have learned that falling does not mean the end. It means the process is working.</p>
+            
+            <h3 class="chapter-subtitle">Confidence Is Built, Not Born</h3>
+            <p>You were not born confident or unconfident. Confidence is a product of accumulated evidence — proof, gathered over time, that you can face difficult things and survive them. Every time you do something despite fear, every time you stay in the uncomfortable moment instead of running, every time you try even knowing you might fail — you add to that evidence base.</p>
+            <p>The person who seems unshakeable is not someone who was spared the trials. They are someone who went through enough of them to stop being surprised by difficulty.</p>
+            <p>The goal is not a life without obstacles. The goal is to become someone for whom obstacles are expected, survivable, and ultimately useful.</p>
+            
+            <h3 class="chapter-subtitle">Fear Is the Compass</h3>
+            <p>The things you are most afraid of doing are almost always the things most worth doing. Fear narrows in precisely on the areas where your life is waiting for you to expand. Not always — some fears are genuine warnings. But the fear of rejection, the fear of being seen, the fear of failing publicly, the fear of choosing yourself — these are not warnings. They are signposts.</p>
+            <p>Becoming unstoppable does not mean becoming fearless. It means becoming someone who moves toward the signposts anyway.</p>
+            
+            <h3 class="chapter-subtitle">Taking Back Control</h3>
+            <p>Control does not mean controlling outcomes. You cannot control whether the attempt succeeds. What you can control is whether you attempt. Whether you show up. Whether you do the work. Whether you take responsibility for your choices rather than your circumstances.</p>
+            <p>The moment you take full ownership of your life — not blaming, not waiting, not making excuses — a shift happens. You stop feeling like something that life is happening to and start feeling like someone who is happening to life.</p>
+            
+            <h3 class="chapter-subtitle">Your First Step</h3>
+            <p>Name one thing you have been afraid to do. One thing you have postponed because of fear disguised as being not ready, waiting for the right time, or needing more preparation. Decide today that you will take one action toward it within the next forty-eight hours. Not the whole thing — one action. Then do it.</p>
+        </section>
+
+        <section id="reset10">
+            <span class="reset-number">Reset 10</span>
+            <h2 class="section-title">The New You</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 40px; opacity: 0.8;">For those who are ready to leave the past behind and build a life they can truly be proud of.</p>
+            
+            <h3 class="chapter-subtitle">You Have Already Done Something Hard</h3>
+            <p>If you have made it here — through ten resets, ten honest confrontations with yourself — you have already done something that most people never do. You have looked at yourself clearly. You have named what needed to change. You have begun.</p>
+            <p>The new you is not someone different from the person who started this book. It is the same person — but stripped of the weight that was never yours to carry, the habits that were keeping you small, the voices that were not telling the truth, the relationships that were costing more than they were worth.</p>
+            <p>The new you is the clearest version of who you already are.</p>
+            
+            <h3 class="chapter-subtitle">What Leaving the Past Behind Actually Means</h3>
+            <p>Leaving the past behind does not mean forgetting it. It does not mean pretending it did not happen or that it did not hurt. Your past shaped you — and some of what it gave you is worth keeping.</p>
+            <p>What you are leaving behind is the story that says the past determines the future. The belief that because it has been this way, it must remain this way. The identity built around wounds instead of around who you choose to become.</p>
+            <p>The past is your history. It is not your destiny. The future belongs entirely to what you do next.</p>
+            
+            <h3 class="chapter-subtitle">The Life You Can Be Proud Of</h3>
+            <p>A life you can be proud of is not a perfect life. It is not a life without failure, regret, or pain. It is a life lived with integrity — where your actions align with your values, where you keep the promises you make to yourself, where you show up even when it is hard, where you choose growth even when comfort is easier.</p>
+            <p>It is built one day at a time. One choice at a time. One reset at a time.</p>
+            
+            <h3 class="chapter-subtitle">The Ongoing Reset</h3>
+            <p>This is not the end. There is no arrival point where the work is finished and you can stop paying attention. Life will continue to bring new weight, new challenges, new moments of disconnection. That is not failure. That is being human.</p>
+            <p>What changes is your relationship to those moments. Instead of being overwhelmed by them, you recognize them. Instead of being buried by them, you name them. Instead of waiting for someone else to rescue you, you do what you have now learned to do.</p>
+            <p>You reset.</p>
+            
+            <h3 class="chapter-subtitle">A Final Word</h3>
+            <p>You picked up this book for a reason. Something in you was ready — ready to stop tolerating the life that was weighing you down, ready to stop making peace with a version of yourself that was less than what you are capable of, ready to do the work that no one else can do for you.</p>
+            <p>That readiness is everything. It is the beginning of every version of your life that is actually worth living.</p>
+            <p>You are not broken. You never were. You were always capable of this. You simply needed to remember.</p>
+            
+            <p style="font-weight: bold; margin-top: 40px;">Now go build it.<br>One reset at a time.</p>
+            
+            <div class="divider">— — —</div>
+            
+            <p style="text-align: center; font-family: var(--font-title); font-size: 1.5rem; color: var(--headings-color); margin-top: 40px;">THE RESET</p>
+            <p style="text-align: center; font-style: italic; opacity: 0.8;">You were always capable of this.<br>You simply needed to remember.</p>
+        </section>
+
+    </div>
+
+    <script>
+        function toggleMode() {
+            const htmlElement = document.documentElement;
+            const toggleText = document.getElementById('toggleText');
+            
+            // التحقق من الوضع الحالي وتبديله
+            if (htmlElement.classList.contains('white-mode')) {
+                htmlElement.classList.remove('white-mode');
+                toggleText.innerText = '☀️ White Mode';
+            } else {
+                htmlElement.classList.add('white-mode');
+                toggleText.innerText = '🌙 Dark Mode';
+            }
+        }
+    </script>
+</body>
+</html>
