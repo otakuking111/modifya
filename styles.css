@@ -374,3 +374,41 @@ body {
       margin: 0 12px;
   }
 }
+:root {
+  --bg: #0f0f0f;
+  --text: #ffffff;
+  --card: #1a1a1a;
+  --accent: #ffffff;
+}
+
+/* LIGHT MODE */
+body.light {
+  --bg: #ffffff;
+  --text: #111111;
+  --card: #f2f2f2;
+  --accent: #111111;
+}
+
+/* APPLY VARIABLES */
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s ease;
+}
+
+.placeholder-card,
+.sidebar-menu,
+.site-header {
+  background: var(--card);
+  color: var(--text);
+}
+
+/* BUTTON */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--text);
+  color: var(--text);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}

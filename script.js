@@ -93,3 +93,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 });
+const themeToggle = document.getElementById("themeToggle");
+
+// Default = DARK MODE (no class needed)
+
+if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
+    themeToggle.innerText = "🌙";
+} else {
+    themeToggle.innerText = "☀️";
+}
+
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+
+    if (document.body.classList.contains("light")) {
+        localStorage.setItem("theme", "light");
+        themeToggle.innerText = "🌙";
+    } else {
+        localStorage.setItem("theme", "dark");
+        themeToggle.innerText = "☀️";
+    }
+});
