@@ -1,149 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modifya</title>
-
-<link rel="stylesheet" href="styles.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifya — Simple Self Improvement Books</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo">Modifya</a>
+            
+            <div class="search-wrapper">
+                <input type="text" id="searchBar" placeholder="Search..." autocomplete="off">
+            </div>
 
-<div class="logo">
-Modifya
-</div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
 
-<div class="search-wrapper">
-<input
-id="search"
-type="text"
-placeholder="Search..."
->
-</div>
+    <nav class="sidebar-menu" id="sidebarMenu">
+        <div class="menu-content">
+            <div class="menu-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" class="active-link">Self Improvement</a></li>
+                    <li><span class="placeholder-link">Business (Coming Soon)</span></li>
+                    <li><span class="placeholder-link">Psychology (Coming Soon)</span></li>
+                    <li><span class="placeholder-link">Finance (Coming Soon)</span></li>
+                    <li><span class="placeholder-link">Novels (Coming Soon)</span></li>
+                </ul>
+            </div>
+            <div class="menu-section">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#" id="menuPopularBtn">Popular Books</a></li>
+                    <li><span class="placeholder-link">About (Coming Soon)</span></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
-<button id="menuButton" class="menu-btn">
-☰
-</button>
+    <main class="main-container">
+        <section class="hero">
+            <h1>Simple Self Improvement Books</h1>
+            <p>Everything you need to grow yourself</p>
+        </section>
 
-</header>
+        <section class="actions-section">
+            <button id="popularBtn" class="btn-secondary">Popular Books</button>
+        </section>
 
-<aside id="sidebar">
+        <section class="content-grid" id="contentGrid">
+            <div class="placeholder-card" data-search="coming soon books available">
+                <span class="card-status">Status</span>
+                <h2>Books will be available soon</h2>
+                <p>We are curating the finest minimalist library for your personal growth journey.</p>
+            </div>
+        </section>
+    </main>
 
-<div class="sidebar-content">
+    <div class="modal" id="popularModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3>Popular Books</h3>
+            <p class="modal-placeholder">Coming Soon</p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modalOverlay"></div>
 
-<h3>Menu</h3>
+    <footer class="site-footer">
+        <p>&copy; 2026 Modifya. All rights reserved.</p>
+    </footer>
 
-<ul>
-
-<li class="active">
-Self Improvement
-</li>
-
-<li>
-Business
-<span>Coming Soon</span>
-</li>
-
-<li>
-Psychology
-<span>Coming Soon</span>
-</li>
-
-<li>
-Finance
-<span>Coming Soon</span>
-</li>
-
-<li>
-Novels
-<span>Coming Soon</span>
-</li>
-
-<hr>
-
-<li>
-Categories
-</li>
-
-<li id="popularMenu">
-Popular Books
-</li>
-
-<li>
-About
-</li>
-
-</ul>
-
-</div>
-
-</aside>
-
-<main>
-
-<section class="hero">
-
-<h1>
-Simple Self Improvement Books
-</h1>
-
-<p>
-Everything you need to grow yourself
-</p>
-
-</section>
-
-<section class="books">
-
-<div class="book-item">
-Books will be available soon
-</div>
-
-</section>
-
-<section class="popular">
-
-<button id="popularButton">
-Popular Books
-</button>
-
-</section>
-
-</main>
-
-<footer>
-
-© Modifya. All rights reserved.
-
-</footer>
-
-<div id="modal" class="modal">
-
-<div class="modal-content">
-
-<h3>Popular Books</h3>
-
-<p>
-Coming Soon
-</p>
-
-<button id="closeModal">
-Close
-</button>
-
-</div>
-
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>

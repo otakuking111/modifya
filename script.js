@@ -1,69 +1,95 @@
-const sidebar = document.getElementById("sidebar");
+document.addEventListener('DOMContentLoaded', () => {
+    
+  // --- Elements Selector ---
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebarMenu = document.getElementById('sidebarMenu');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const searchBar = document.getElementById('searchBar');
+  const contentGrid = document.getElementById('contentGrid');
+  const cards = contentGrid.getElementsByClassName('placeholder-card');
+  
+  const popularBtn = document.getElementById('popularBtn');
+  const menuPopularBtn = document.getElementById('menuPopularBtn');
+  const popularModal = document.getElementById('popularModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
 
-const menuButton = document.getElementById("menuButton");
+  // Create a single state-managed instance of a "No Results" message
+  const noResultsMsg = document.createElement('div');
+  noResultsMsg.className = 'no-results';
+  noResultsMsg.textContent = 'No matching placeholders found.';
+  noResultsMsg.style.display = 'none';
+  contentGrid.appendChild(noResultsMsg);
 
-menuButton.addEventListener("click", () => {
+  // --- Sidebar Menu Logic ---
+  function toggleMenu() {
+      const isOpen = sidebarMenu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
 
-sidebar.classList.toggle("open");
+  function closeMenu() {
+      sidebarMenu.classList.remove('active');
+      menuToggle.classList.remove('active');
+      menuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+  }
 
-});
+  menuToggle.addEventListener('click', toggleMenu);
+  menuOverlay.addEventListener('click', closeMenu);
 
-const modal = document.getElementById("modal");
+  // --- Modal Architecture ---
+  function openModal(e) {
+      e.preventDefault();
+      closeMenu(); // Safety check if clicked from inside the sidebar
+      popularModal.classList.add('active');
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+  }
 
-const openModal = document.getElementById("popularButton");
+  function closeModal() {
+      popularModal.classList.remove('active');
+      modalOverlay.classList.remove('active');
+      if (!sidebarMenu.classList.contains('active')) {
+          document.body.style.overflow = '';
+      }
+  }
 
-const closeModal = document.getElementById("closeModal");
+  popularBtn.addEventListener('click', openModal);
+  menuPopularBtn.addEventListener('click', openModal);
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', closeModal);
 
-const openModalMenu = document.getElementById("popularMenu");
+  // --- Functional Filter Engine ---
+  searchBar.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      let matches = 0;
 
-function showModal(){
+      Array.from(cards).forEach(card => {
+          const searchableText = card.getAttribute('data-search') || '';
+          
+          if (searchableText.includes(query)) {
+              card.style.display = 'block';
+              matches++;
+          } else {
+              card.style.display = 'none';
+          }
+      });
 
-modal.classList.add("show");
+      // Display text if even placeholders get filtered out completely
+      if (matches === 0) {
+          noResultsMsg.style.display = 'block';
+      } else {
+          noResultsMsg.style.display = 'none';
+      }
+  });
 
-}
-
-openModal.addEventListener("click", showModal);
-
-openModalMenu.addEventListener("click", showModal);
-
-closeModal.addEventListener("click", ()=>{
-
-modal.classList.remove("show");
-
-});
-
-modal.addEventListener("click",(e)=>{
-
-if(e.target===modal){
-
-modal.classList.remove("show");
-
-}
-
-});
-
-const search = document.getElementById("search");
-
-const items = document.querySelectorAll(".book-item");
-
-search.addEventListener("input",function(){
-
-const value = this.value.toLowerCase();
-
-items.forEach(item=>{
-
-const text = item.textContent.toLowerCase();
-
-if(text.includes(value)){
-
-item.style.display="block";
-
-}else{
-
-item.style.display="none";
-
-}
-
-});
-
+  // Escape Key Handler for Accessibility (Closes open layers)
+  window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+          closeModal();
+          closeMenu();
+      }
+  });
 });
