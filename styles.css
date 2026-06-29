@@ -1296,15 +1296,14 @@ ul { list-style: none; }
   display:block;
   border-radius:inherit;
 }
-.btn--green {
-  background: #22c55e;
-  color: #fff;
-  border: 2px solid #22c55e;
-  transition: all 0.3s ease;
+#freeBtn {
+  background-color: #25D366 !important;
+  color: #ffffff !important;
+  border: 2px solid #25D366 !important;
 }
 
-.btn--green:hover {
-  background: #16a34a;
-  border-color: #16a34a;
-  transform: translateY(-2px);
+#freeBtn:hover {
+  background-color: #1EBE57 !important;
+  border-color: #1EBE57 !important;
+  color: #ffffff !important;
 }
