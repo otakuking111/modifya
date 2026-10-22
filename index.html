@@ -136,7 +136,14 @@ try{bridge.initialize().then(function(){PB.ok=1;try{var p=bridge.platform;p.on(b
 <div id="ab" role="button" aria-label="Watch an ad to unlock a temporary boss weapon"><span class="ai">📺</span><span>UNLOCK BOSS WEAPON<small>Watch ad · this level only</small></span></div>
 <div id="hk"></div>
 <div id="panel"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="three.min.js"></script>
+<script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
+<script>
+/* diagnostics: show any startup problem on screen instead of failing silently */
+(function(){function show(t){var d=document.createElement('div');d.style.cssText='position:fixed;left:8px;right:8px;top:60px;z-index:999;background:rgba(120,0,20,.92);color:#fff;font:13px monospace;padding:10px;border-radius:8px;white-space:pre-wrap;pointer-events:none';d.textContent=t;document.body.appendChild(d);try{PB.send()}catch(e){}}
+window.addEventListener('error',function(e){show('Game error: '+(e.message||'unknown')+(e.filename?' @'+String(e.filename).split('/').pop()+':'+e.lineno:''))});
+if(!window.THREE)show('3D engine (three.js) failed to load.\nPut three.min.js (r128) next to index.html.');})();
+</script>
 <script>
 const $=id=>document.getElementById(id),PN=$('panel');
 const SV={best:1,wp:0,un:1,seen:1,as:1,mu:0,tut:0,st:{},kills:0,hx:0};
