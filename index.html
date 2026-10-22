@@ -40,7 +40,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;background:rad
 @media (pointer:coarse){#tf,.tb small,#hint{display:none!important}#pad{padding-bottom:calc(44px + env(safe-area-inset-bottom,0px))}#low{bottom:calc(128px + env(safe-area-inset-bottom,0px))}#fh .m{display:inline}#fh .d{display:none}}
 @media (max-height:420px){.tb{width:58px;height:58px;font-size:22px}#low{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
 @media (pointer:coarse) and (max-height:480px){.tb{width:56px;height:56px;font-size:22px;border-radius:15px}#pad{padding-bottom:calc(34px + env(safe-area-inset-bottom,0px))}.grp{gap:14px}#low{bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
-@media (prefers-reduced-motion:reduce){#fh,.new,.stp.big .ic{animation:none}}
+@media (prefers-reduced-motion:reduce){#fh,#ab,.new,.stp.big .ic{animation:none}}
 /* panels */
 #panel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,rgba(14,27,36,.5),rgba(3,8,12,.9));padding:14px;touch-action:auto}
 #panel.on{display:flex}
@@ -110,6 +110,15 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 #hk.on::before{animation:hkRing 1s cubic-bezier(.15,.7,.3,1)}
 @keyframes hkFlash{0%{opacity:1;background:radial-gradient(circle,rgba(193,59,255,.4),rgba(255,42,85,.15) 60%,transparent 80%)}100%{opacity:0}}
 @keyframes hkRing{0%{transform:scale(.05)}100%{transform:scale(7)}}
+/* rewarded ads */
+#ab{position:fixed;top:calc(50px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:none;align-items:center;gap:9px;white-space:nowrap;padding:7px 14px;border-radius:12px;background:rgba(10,22,30,.88);border:2px solid var(--gd);color:var(--gd);font-size:13px;font-weight:800;letter-spacing:.5px;line-height:1.25;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:abp 1.4s ease-in-out infinite}
+#ab.on{display:flex}#ab .ai{font-size:20px}#ab small{display:block;font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.3px}
+@keyframes abp{50%{box-shadow:0 0 18px rgba(255,209,102,.6)}}
+button.rvb{background:var(--gd);border-bottom-color:#a67c10;color:#201400}
+.adbox{margin:12px 0;padding:10px 12px;border:1px solid var(--gd);border-radius:12px;background:rgba(255,209,102,.08)}
+.adbox b{display:block;color:var(--gd);font-size:15px}.adbox span{font-size:13px;color:var(--mut);line-height:1.4}
+.adn{color:#ff8a9a;font-size:13px!important}
+.bwi{width:110px;height:50px}
 </style>
 <script src="https://bridge.playgama.com/v1/stable/playgama-bridge.js"></script>
 <script>
@@ -124,6 +133,7 @@ try{bridge.initialize().then(function(){PB.ok=1;try{var p=bridge.platform;p.on(b
 <div id="fx"></div><div id="fh"><span class="d">CLICK CENTER<br>TO FIRE</span><span class="m">TAP THE<br>SCREEN<br>TO FIRE</span></div>
 <div id="pz" title="Pause (P)">⏸</div><div id="fs" title="Fullscreen">⛶</div>
 <div id="pad"><div class="grp"><div class="tb" id="tl">◀<small>A / ←</small></div><div class="tb" id="tr">▶<small>D / →</small></div></div><div class="grp"><div class="tb" id="td">⚡<small>Q</small></div><div class="tb" id="tg">G<small>HAKI</small></div><div class="tb" id="tj">▲<small>W / SPACE</small></div><div class="tb" id="tf">🔫<small>ENTER</small></div></div></div>
+<div id="ab" role="button" aria-label="Watch an ad to unlock a temporary boss weapon"><span class="ai">📺</span><span>UNLOCK BOSS WEAPON<small>Watch ad · this level only</small></span></div>
 <div id="hk"></div>
 <div id="panel"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -177,9 +187,9 @@ function gen(n){let s=n*2654435761>>>0;const r=()=>(s=s*1664525+1013904223>>>0)/
 
 /* audio */
 let AC;const au=()=>{if(!AC)try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}if(AC&&AC.state==='suspended')AC.resume()};
-function tone(f,d,ty,v,f2){if(!AC||SV.mu||PB.mu)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f2||f/2,t+d);g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d)}
+function tone(f,d,ty,v,f2){if(!AC||SV.mu||PB.mu||PB.ad)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f2||f/2,t+d);g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d)}
 const NB={};function mkNB(d){const n=AC.sampleRate*d,b=AC.createBuffer(1,n,AC.sampleRate),a=b.getChannelData(0);for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);return b}
-function noise(d,v){if(!AC||SV.mu||PB.mu)return;const b=NB[d]||(NB[d]=mkNB(d));const s=AC.createBufferSource(),g=AC.createGain();s.buffer=b;g.gain.value=v;s.connect(g).connect(AC.destination);s.start()}
+function noise(d,v){if(!AC||SV.mu||PB.mu||PB.ad)return;const b=NB[d]||(NB[d]=mkNB(d));const s=AC.createBufferSource(),g=AC.createGain();s.buffer=b;g.gain.value=v;s.connect(g).connect(AC.destination);s.start()}
 const sShot=()=>{noise(.16,.3);tone(140,.14,'square',.1)},sBoom=()=>{noise(.5,.55);tone(70,.4,'sine',.4)},sThud=v=>tone(90,.1,'sine',Math.min(.2,v/40)),sEn=()=>tone(260,.25,'sawtooth',.05,520),sJump=()=>tone(300,.12,'triangle',.1,600),
  sUnlock=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.3,'triangle',.22,f*1.01),i*110));
 
@@ -213,13 +223,15 @@ const sight=new THREE.Mesh(laserG,new THREE.MeshBasicMaterial({color:0x3dd6ff,tr
 /* state */
 let st='menu',lvl=1,ts=1,time=0,shake=0,deaths=0,hold=false,msgT=0,D=0,camX=0,camY=5,vhw=11.2;
 let boxes=[],en=[],bl=[],pt=[];
+let TW=null,rv=0; // TW = temporary (ad-unlocked) weapon {lvl,w}; rv = revives used this level
+const cw=()=>TW&&TW.lvl===lvl?TW.w:WP[SV.wp];
 const KEY={l:0,r:0,j:0},TB={l:0,r:0,j:0};
 const P={x:-7,y:1,vx:0,vy:0,a:0,w:0,cd:0,rl:0,am:0,q:0,qt:0,buf:0,en:100,gt:0,jb:0,hp:3,inv:0,sc:0,alive:true,m:null};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const exs=[],pgeo=new THREE.BoxGeometry(1,1,1),pmat={};
 function spawn(x,y,c,n,sp,s){if(pt.length>140)return;const mt=pmat[c]||(pmat[c]=new THREE.MeshBasicMaterial({color:c}));for(let i=0;i<n;i++){const m=new THREE.Mesh(pgeo,mt);const z=(s||.18)*(.5+Math.random());m.scale.set(z,z,z);m.position.set(x,y,0);scene.add(m);const a=Math.random()*6.28,v=sp*(.3+Math.random());pt.push({m,vx:Math.cos(a)*v,vy:Math.sin(a)*v,vz:(Math.random()-.5)*v,l:.7+Math.random()*.6})}}
 function clear(){LG.clear();pk.forEach(q=>scene.remove(q.m));pk=[];boxes=[];en=[];exs.splice(0).forEach(x=>{scene.remove(x.m);x.m.material.dispose()});bl.forEach(b=>{scene.remove(b.m);});bl=[]}
-function loadLevel(n,retry){clear();lvl=n;if(!retry)deaths=0;D=Math.min(1,(n-1)/16);
+function loadLevel(n,retry){clear();lvl=n;if(TW&&TW.lvl!==n)TW=null;if(!retry){deaths=0;rv=0}D=Math.min(1,(n-1)/16);
  const L=LV[n-1]||gen(n),hue=(n*37%360)/360;
  wall.material.color.setHSL(hue,.35,.2);scene.background=new THREE.Color().setHSL(hue,.4,.1);
  const fc=new THREE.Color().setHSL(hue,.3,.35),pc=new THREE.Color().setHSL((hue+.08)%1,.55,.5);
@@ -232,28 +244,29 @@ function loadLevel(n,retry){clear();lvl=n;if(!retry)deaths=0;D=Math.min(1,(n-1)/
   en.push({ox:d[0],x:d[0],y:d[1],cy:d[1],vx:0,vy:0,w:0,gx:d[0],gy:d[1],hy:d[1],gt:Math.random(),dc:0,sf:(d[2]===1?1:d[2]===0?.5:d[2]===5?.3:d[2]===4?1.1:.75)*(.6+.5*D+(n>=3?.15:0)),
    t:d[2],iv:d[3]*(1-.32*D),amp:Math.max(1.8,d[4]*1.6),tm:-.9-Math.random()*1.3,aim:Math.PI,lock:false,b:0,bt:0,k:0,m,lz,hp,sc:d[5]?2:hp>1?1.3:1.1,boss:!!d[5],alive:true});
   m.position.set(d[0],d[1],0)});
- const W=WP[SV.wp];if(!P.m){P.m=new THREE.Group();scene.add(P.m)}
+ const W=cw();if(!P.m){P.m=new THREE.Group();scene.add(P.m)}
  P.m.clear();const g=mkGun(W.c,W.len,W.sw,W.tx);while(g.children.length)P.m.add(g.children[0]);addNeon(P.m,W.len);sight.position.set(.9*W.len+.25,.1,0);P.m.add(sight);P.m.visible=true;
  Object.assign(P,{x:-7,y:1,vx:0,vy:0,a:0,w:0,cd:0,rl:0,q:0,buf:0,en:100,gt:0,jb:0,hp:3,inv:1,dc:0,hm:0,hu:0,am:W.mag,alive:true});
  st='play';ts=1;msg('LEVEL '+n+(n%10===0?' ☠ BOSS':''),1.2);$('fh').className=n<=2?'on':'';
- $('hint').textContent=n<=2?(matchMedia('(pointer:coarse)').matches?'Tap the screen to fire. ◀ ▶ move, ▲ jump (hold to fly). ⏸ pause.':'Click anywhere / Enter: fire (recoil moves you). A D: move. Space: jump (hold in air = jetpack). P: pause.'):n===6?'New: BOMB — shoot it to blow up nearby enemies. Stay clear!':n===7?'New: BLADER — it dashes and slashes. Dodge the red laser!':'';hud()}
+ $('hint').textContent=n<=2?(matchMedia('(pointer:coarse)').matches?'Tap the screen to fire. ◀ ▶ move, ▲ jump (hold to fly). ⏸ pause.':'Click anywhere / Enter: fire (recoil moves you). A D: move. Space: jump (hold in air = jetpack). P: pause.'):n===6?'New: BOMB — shoot it to blow up nearby enemies. Stay clear!':n===7?'New: BLADER — it dashes and slashes. Dodge the red laser!':'';hud();abShow()}
 function msg(t,s,c){const m=$('msg');m.textContent=t;m.className=c||'';msgT=s||0}
-function hud(){$('hs').innerHTML='LEVEL <b>'+lvl+'</b> — '+WP[SV.wp].n;$('hp').textContent='♥'.repeat(Math.max(0,P.hp));$('he').innerHTML='Enemies: <b>'+en.filter(e=>e.alive&&e.t!==5).length+'</b>'+(SV.hx?' · 👁 '+(P.hm|0)+'% ('+(2-P.hu)+')':'')}
+function hud(){$('hs').innerHTML='LEVEL <b>'+lvl+'</b> — '+cw().n+(TW&&TW.lvl===lvl?' ★':'');$('hp').textContent='♥'.repeat(Math.max(0,P.hp));$('he').innerHTML='Enemies: <b>'+en.filter(e=>e.alive&&e.t!==5).length+'</b>'+(SV.hx?' · 👁 '+(P.hm|0)+'% ('+(2-P.hu)+')':'')}
 
 /* combat */
 const nrm=a=>Math.atan2(Math.sin(a),Math.cos(a));
 function near(){let best=null,bd=.7;for(const e of en)if(e.alive&&e.t!==5){const d=nrm(Math.atan2(e.y-P.y,e.x-P.x)-P.a);if(Math.abs(d)<Math.abs(bd)){bd=d;best=e}}return best?{e:best,d:bd}:null}
 function bullet(x,y,a,sp,own){const m=new THREE.Mesh(geo,own?bm1:bm2),s=own?.11:.2;m.scale.setScalar(s);m.position.set(x,y,0);scene.add(m);bl.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,own,rc:own?1:0,l:3.5,m,r:s})}
-function shot(){const W=WP[SV.wp],dx=Math.cos(P.a),dy=Math.sin(P.a);let a0=P.a;
+function shot(){const W=cw(),dx=Math.cos(P.a),dy=Math.sin(P.a);let a0=P.a;
  if(SV.as&&W.pel===1){const t=near();if(t&&Math.abs(t.d)<.1)a0+=t.d}
   for(let i=0;i<W.pel;i++)bullet(P.x+dx*.8*W.len,P.y+dy*.8*W.len,a0+(Math.random()-.5)*2*W.sp,32,1);
  if(W.bx){const b=bl[bl.length-1];b.bm=1;b.rc=0;b.m.material=bmb;b.m.scale.setScalar(.24);b.r=.24;b.vx*=.55;b.vy*=.55}
+ if(W.dm){for(let i=Math.max(0,bl.length-W.pel);i<bl.length;i++){const b=bl[i];b.dm=W.dm;b.m.material=bmp;b.m.scale.setScalar(.22);b.r=.22}}
  $('fh').className&&($('fh').className='');P.vx-=dx*W.rec;P.vy-=dy*W.rec;P.w+=W.tq;P.am--;
  spawn(P.x+dx*.8*W.len,P.y+dy*.8*W.len,0xffd166,3,5,.12);if(W.pel>1||!W.auto)spawn(P.x,P.y+.2,0xc9a227,1,3,.08);shake=Math.max(shake,.05+W.rec/160);sShot()}
-function fire(){const W=WP[SV.wp];if(st!=='play'||!P.alive||P.cd>0||P.rl>0||P.q>0||P.am<=0)return false;
+function fire(){const W=cw();if(st!=='play'||!P.alive||P.cd>0||P.rl>0||P.q>0||P.am<=0)return false;
  shot();P.cd=W.cd+(W.burst?W.burst*.07:0);if(W.burst){P.q=W.burst-1;P.qt=.07}if(P.am<=0)P.rl=W.rel;return true}
 function press(){au();hold=true;if(!fire())P.buf=.15}
-function reload(){const W=WP[SV.wp];if(st==='play'&&P.alive&&P.rl<=0&&P.am<W.mag)P.rl=W.rel}
+function reload(){const W=cw();if(st==='play'&&P.alive&&P.rl<=0&&P.am<W.mag)P.rl=W.rel}
 function jump(){au();P.jb=.12}
 function mkBomb(){const g=new THREE.Group(),c=new THREE.Mesh(geo,M(0x2b2f38,0x661500));c.scale.setScalar(.6);g.add(c);box(.12,.3,.12,0xffd166,0,.62,0,g);g.add(new THREE.Mesh(new THREE.RingGeometry(3.3,3.4,40),new THREE.MeshBasicMaterial({color:0xff5030,transparent:true,opacity:.28,side:THREE.DoubleSide})));g.userData.c=c;return g}
 function addRing(x,y,r,c){const m=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:c||0xffc27a,transparent:true,opacity:.55,depthWrite:false}));m.position.set(x,y,0);m.scale.setScalar(.2);scene.add(m);exs.push({m,t:0,r})}
@@ -268,9 +281,9 @@ function hurt(e){if(e.t===5)return boom(e);if(--e.hp>0){spawn(e.x,e.y,0xffffff,8
  if(!en.some(q=>q.alive&&q.t!==5)&&st==='play')win()}
 function hitP(b){if(P.inv>0)return;P.hp--;hud();if(P.hp<=0)return die();
  $('fx').classList.add('on');setTimeout(()=>$('fx').classList.remove('on'),70);P.inv=1.3;P.vx+=Math.sign(b.vx||1)*5;P.vy+=3;shake=.4;spawn(P.x,P.y,0xff5470,10,8,.15);tone(180,.2,'sawtooth',.15,60)}
-function die(){if(!P.alive)return;P.alive=false;P.m.visible=false;spawn(P.x,P.y,WP[SV.wp].pc||WP[SV.wp].c,26,10,.25);spawn(P.x,P.y,0xffffff,8,8);sBoom();shake=.6;deaths++;ts=.35;msg('YOU DIED',1.4);setTimeout(()=>{ts=1;if(st==='play')loadLevel(lvl,1)},1000)}
+function die(){if(!P.alive)return;P.alive=false;P.m.visible=false;spawn(P.x,P.y,cw().pc||cw().c,26,10,.25);spawn(P.x,P.y,0xffffff,8,8);sBoom();shake=.6;deaths++;ts=.35;msg('YOU DIED',1.4);setTimeout(()=>{ts=1;if(st!=='play')return;if(adsOK()&&rv<2){st='over';msg('');deathPanel()}else loadLevel(lvl,1)},1000)}
 function stats(w){return 'Recoil '+'▮'.repeat(Math.round(w.rec/4))+' &nbsp; Fire rate '+'▮'.repeat(Math.max(1,Math.round(.3/w.cd)))+' &nbsp; Ammo '+w.mag}
-function win(){st='win';ts=.3;const nu=Math.min(WP.length-1,1+Math.floor(lvl/2)),nw=nu>SV.un;
+function win(){st='win';ts=.3;TW=null;$('ab').classList.remove('on');const nu=Math.min(WP.length-1,1+Math.floor(lvl/2)),nw=nu>SV.un;
  msg(nw?'NEW WEAPON UNLOCKED!':'LEVEL COMPLETE!',2,nw?'gold':'');if(nw)sUnlock();
  setTimeout(()=>{ts=1;SV.un=Math.max(SV.un,nu);const bn=lvl===14&&SV.best<15;SV.best=Math.max(SV.best,lvl+1);save();
   const stars=deaths===0&&P.hp===3?3:deaths===0?2:1,w=WP[nu-1];SV.st[lvl]=Math.max(SV.st[lvl]||0,stars);const hxn=chkHx();save();
@@ -287,7 +300,7 @@ function col(o,r,b,rest){const cx=Math.max(b.x-b.w/2,Math.min(o.x,b.x+b.w/2)),cy
  o.x+=nx*pen;o.y+=ny*pen;if(ny>.6)o.gt=.1;const vn=o.vx*nx+o.vy*ny;
  if(vn<0){o.vx-=(1+rest)*vn*nx;o.vy-=(1+rest)*vn*ny;const tx=-ny,ty=nx,vt=o.vx*tx+o.vy*ty;o.vx-=vt*.1*tx;o.vy-=vt*.1*ty;o.w*=.85;if(-vn>3){sThud(-vn);spawn(o.x-nx*r,o.y-ny*r,0xcfd8dc,3,2,.1)}}}
 function step(dt){
- if(P.alive&&st==='play'){const W=WP[SV.wp];
+ if(P.alive&&st==='play'){const W=cw();
   P.gt-=dt;P.inv-=dt;P.jb-=dt;P.dc-=dt;if(hkC>0)hkC-=dt;
   const dir=((KEY.r||TB.r)?1:0)-((KEY.l||TB.l)?1:0),gr=P.gt>0;
   if(gr){ // walking: snappy accel, strong friction, energy refills
@@ -332,7 +345,7 @@ function step(dt){
  for(let i=bl.length-1;i>=0;i--){const b=bl[i];let dead=false;b.l-=dt;const px=b.x,py=b.y;
   if(b.bm)b.vy-=14*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;
   for(const q of boxes){if(Math.abs(b.x-q.x)<q.w/2+b.r&&Math.abs(b.y-q.y)<q.h/2+b.r){if(b.rc>0){b.rc--;if(Math.abs(px-q.x)>=q.w/2+b.r)b.vx*=-1;else b.vy*=-1;b.x=px;b.y=py;spawn(b.x,b.y,0xffe08a,3,4,.08)}else{dead=true;spawn(b.x,b.y,0xcfd8dc,3,3,.08)}break}}
-  if(!dead){if(b.own){for(const e of en)if(e.alive&&Math.hypot(b.x-e.x,b.y-e.y)<.7){if(b.bm)dead=true;else{hurt(e);dead=true}break}}
+  if(!dead){if(b.own){for(const e of en)if(e.alive&&Math.hypot(b.x-e.x,b.y-e.y)<.7){if(b.bm)dead=true;else{if(b.dm>1)e.hp-=b.dm-1;hurt(e);dead=true}break}}
    else if(P.alive&&st==='play'&&Math.hypot(b.x-P.x,b.y-P.y)<.4+b.r*.5){hitP(b);dead=true}}
   if(b.l<=0)dead=true;b.m.position.set(b.x,b.y,0);if(dead){if(b.bm)blast(b.x,b.y);scene.remove(b.m);;bl.splice(i,1)}}
  for(let i=pt.length-1;i>=0;i--){const p=pt[i];p.l-=dt;p.vy-=14*dt;p.m.position.x+=p.vx*dt;p.m.position.y+=p.vy*dt;p.m.position.z+=p.vz*dt;if(p.m.position.y<.1){p.m.position.y=.1;p.vy*=-.4;p.vx*=.7}p.m.rotation.x+=dt*6;if(p.l<=0){scene.remove(p.m);pt.splice(i,1)}}
@@ -374,17 +387,17 @@ function renderMenu(){const un=SV.un;
  $('how').onclick=()=>tutorial(renderMenu);$('pl').onclick=()=>startLevel(SV.best)}
 function menu(){st='menu';bg();hide();renderMenu()}
 function pauseGame(keep){if(st!=='play'||!P.alive)return;st='pause';hold=false;KEY.l=KEY.r=KEY.j=TB.l=TB.r=TB.j=0;
- show(`<h1>PAUSED</h1><p class="tg">Level ${lvl} · changing weapon restarts the level</p>
+ show(`<h1>PAUSED</h1><p class="tg">Level ${lvl} · changing weapon restarts the level${TW&&TW.lvl===lvl?' (you will lose the temporary boss weapon)':''}</p>
  <div class="sec"><h3>WEAPON</h3><div class="wg">${WP.map((w,i)=>wCard(w,i,1)).join('')}</div><p class="wd"><b>${WP[SV.wp].n}</b> — ${WP[SV.wp].d}</p></div>
  <div class="sec"><h3>SETTINGS</h3>${settingsHTML()}</div>
  <div class="foot"><button class="o" id="rs">▶ RESUME</button><div class="rw"><button class="s" id="rt">Restart level</button><button class="s" id="mn">Main menu</button></div></div>`,!!keep);
- PN.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const i=+b.dataset.w;if(i===SV.wp){resume();return}SV.wp=i;SV.seen=Math.max(SV.seen,i+1);save();hide();loadLevel(lvl)});
+ PN.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const i=+b.dataset.w;if(i===SV.wp&&!TW){resume();return}TW=null;SV.wp=i;SV.seen=Math.max(SV.seen,i+1);save();hide();loadLevel(lvl)});
  $('as').onclick=()=>{SV.as=SV.as?0:1;save();st='play';pauseGame(1)};$('snd').onclick=()=>{SV.mu=SV.mu?0:1;save();st='play';pauseGame(1)};
  $('how').onclick=()=>tutorial(()=>{st='play';pauseGame()});$('rs').onclick=resume;$('rt').onclick=()=>{hide();loadLevel(lvl)};$('mn').onclick=menu}
 function resume(){if(st!=='pause')return;hide();st='play'}
 function resize(){const w=innerWidth,h=innerHeight,a=w/h,t=Math.tan(22.5*Math.PI/180);R.setSize(w,h);cam.aspect=a;cam.updateProjectionMatrix();vhw=11.2;cam.userData.d=Math.max(7.2/t,vhw/(t*a))}
 addEventListener('resize',resize);resize();
-addEventListener('pointerdown',e=>{if(e.target.closest('#panel,.tb,#pz,#fs'))return;press()});
+addEventListener('pointerdown',e=>{if(e.target.closest('#panel,.tb,#pz,#fs,#ab'))return;press()});
 addEventListener('pointerup',()=>hold=false);addEventListener('pointercancel',()=>hold=false);
 addEventListener('keydown',e=>{if((e.code==='KeyP'||e.code==='Escape')&&!e.repeat){if(st==='pause')resume();else pauseGame();return}
  if(PN.classList.contains('on')){const ok=$('ok');if(ok&&(e.code==='Enter'||e.code==='Space')){e.preventDefault();ok.click()}return}
@@ -400,13 +413,66 @@ fsEl.addEventListener('pointerdown',e=>e.stopPropagation());fsEl.addEventListene
 const kb=[['tl',()=>KEY.l||TB.l],['tr',()=>KEY.r||TB.r],['tj',()=>KEY.j||TB.j],['tf',()=>hold]].map(([i,f])=>({el:$(i),f,s:0}));
 let last=performance.now(),acc=0,lastAt,lastEw;
 function loop(){requestAnimationFrame(loop);const n=performance.now(),raw=Math.min(.033,(n-last)/1000);last=n;acc+=raw*ts;
- while(acc>=1/120){if(st==='pause'){acc=0;break}if(st!=='menu')step(1/120);else{en.forEach(e=>{e.m.rotation.z=Math.sin(time)*.3+Math.PI});if(P.m)P.m.rotation.z=time}time+=1/120;acc-=1/120}
+ while(acc>=1/120){if(st==='pause'||st==='ad'||st==='over'){acc=0;break}if(st!=='menu')step(1/120);else{en.forEach(e=>{e.m.rotation.z=Math.sin(time)*.3+Math.PI});if(P.m)P.m.rotation.z=time}time+=1/120;acc-=1/120}
  if(msgT>0){msgT-=raw;if(msgT<=0)msg('')}
- shake*=Math.pow(.0005,raw);const W=WP[SV.wp];const at=P.rl>0?'RELOADING…':P.am+' / '+W.mag;if(at!==lastAt){lastAt=at;$('ammo').textContent=at}const ew=P.en.toFixed(0)+'%';if(ew!==lastEw){lastEw=ew;$('bi').style.width=ew}
+ shake*=Math.pow(.0005,raw);const W=cw();const at=P.rl>0?'RELOADING…':P.am+' / '+W.mag;if(at!==lastAt){lastAt=at;$('ammo').textContent=at}const ew=P.en.toFixed(0)+'%';if(ew!==lastEw){lastEw=ew;$('bi').style.width=ew}
  kb.forEach(k=>{const v=k.f()?1:0;if(v!==k.s){k.s=v;k.el.classList.toggle('on',!!v)}});stars.material.opacity=.35+.2*Math.sin(time*1.5);$('tg').classList.toggle('cd',hkC>0||P.hm<100||P.hu>=2);$('td').classList.toggle('cd',P.dc>0);
  const k=1-Math.pow(.02,raw),lim=Math.max(0,10-vhw),tx=P.alive?(lim>0?clamp(P.x,-lim,lim):P.x*.08):camX,ty=P.alive?5+(P.y-5)*.12:camY;camX+=(tx-camX)*k;camY+=(ty-camY)*k;
  cam.position.set(camX+(Math.random()-.5)*shake,camY+(Math.random()-.5)*shake,cam.userData.d);cam.lookAt(camX*(lim>0?1:.5),camY+1,0);
  R.render(scene,cam)}
+/* ============ Playgama rewarded ads ============ */
+const BW={n:'Boss Buster',d:'Heavy plasma cannon. Every shot deals 4× damage — melts bosses in just a few hits.',c:0xff3df0,rec:9,tq:5,cd:.2,mag:10,rel:.7,pel:1,sp:0,len:1.6,auto:0,burst:0,dm:4};
+const bmp=new THREE.MeshBasicMaterial({color:0xff4df0});
+const BWI='<svg class="bwi" viewBox="0 0 64 32"><rect x="4" y="11" width="18" height="10" rx="3" fill="#2c3440"/><rect x="20" y="9" width="36" height="6" fill="#ff3df0"/><rect x="20" y="16" width="36" height="4" fill="#ff3df0" opacity=".7"/><circle cx="58" cy="14" r="4" fill="#fff"/><path d="M8 21h8l-3 9H5z" fill="#2c3440"/></svg>';
+const AD={busy:0};
+// Rewarded ads are only offered when the platform reports support for them.
+function adsOK(){try{return !!(PB.ok&&window.bridge&&bridge.advertisement&&bridge.advertisement.isRewardedSupported)}catch(e){return false}}
+// Shows one rewarded ad. The game is already frozen by the caller, audio is muted while the ad plays,
+// and the reward is granted ONLY if the platform reports the REWARDED state. done(true) / done(false, 'closed'|'failed')
+function showReward(place,done){
+ if(AD.busy)return;if(!adsOK())return done(false,'failed');
+ AD.busy=1;let got=0,fin=0,tm=0;
+ const adv=bridge.advertisement,RS=bridge.REWARDED_STATE||{},sO=RS.OPENED||'opened',sR=RS.REWARDED||'rewarded',sC=RS.CLOSED||'closed',sF=RS.FAILED||'failed';
+ PN.querySelectorAll('button').forEach(b=>b.disabled=true);
+ const end=r=>{if(fin)return;fin=1;clearTimeout(tm);AD.busy=0;PB.ad=0;try{adv.off(bridge.EVENT_NAME.REWARDED_STATE_CHANGED,h)}catch(e){}
+  try{if(AC&&AC.state==='suspended')AC.resume()}catch(e){}
+  done(!!got,r)};
+ const h=s=>{if(s===sO){PB.ad=1;try{AC&&AC.suspend()}catch(e){}}
+  else if(s===sR){got=1;clearTimeout(tm);tm=setTimeout(()=>end('closed'),2500)}
+  else if(s===sC)end('closed');else if(s===sF)end('failed')};
+ try{adv.on(bridge.EVENT_NAME.REWARDED_STATE_CHANGED,h);adv.showRewarded(place)}catch(e){end('failed')}}
+const adMsg=why=>why==='closed'?'Watch the whole ad to earn your reward.':'No ad is available right now. Please try again in a moment.';
+const freeze=()=>{hold=false;KEY.l=KEY.r=KEY.j=TB.l=TB.r=TB.j=0};
+function abShow(){$('ab').classList.toggle('on',st==='play'&&lvl%10===0&&!(TW&&TW.lvl===lvl)&&adsOK())}
+
+// 1) REVIVE after death
+function deathPanel(note){freeze();
+ show('<h1>YOU DIED</h1><p class="tg">Level '+lvl+(deaths?' · Deaths: '+deaths:'')+'</p>'+(note?'<p class="adn">'+note+'</p>':'')+
+  '<div class="adbox"><b>📺 Watch a short ad to revive</b><span>Continue right where you fell, with full health. Revives left on this level: '+(2-rv)+'.</span></div>'+
+  '<div class="row"><button class="o rvb" id="rv" style="width:100%">📺 REVIVE · WATCH AD</button></div><div class="row"><button class="s" id="rt">↻ Retry level</button><button class="s" id="mn">Main menu</button></div>');
+ PN.firstChild.classList.add('sm');
+ $('rv').onclick=()=>showReward('revive',(ok,why)=>{if(ok)revive();else deathPanel(adMsg(why))});
+ $('rt').onclick=()=>{hide();loadLevel(lvl,1)};$('mn').onclick=menu}
+function revive(){hide();rv++;const W=cw();
+ P.alive=true;P.hp=3;P.inv=2.5;P.vx=P.vy=P.w=0;P.q=0;P.rl=0;P.cd=0;P.am=W.mag;P.en=100;P.m.visible=true;
+ bl.forEach(b=>{if(!b.own)scene.remove(b.m)});bl=bl.filter(b=>b.own);
+ en.forEach(e=>{if(e.alive){e.lock=false;e.b=0;e.tm=-.8;e.lz.visible=false}});
+ spawn(P.x,P.y,0x4dfff0,18,9,.16);addRing(P.x,P.y,3,0x4dfff0);sUnlock();
+ st='play';ts=1;msg('REVIVED!',1.1,'gold');hud()}
+
+// 2) TEMPORARY BOSS WEAPON
+function rebuildGun(){const W=cw();P.m.clear();const g=mkGun(W.c,W.len,W.sw,W.tx);while(g.children.length)P.m.add(g.children[0]);addNeon(P.m,W.len);sight.position.set(.9*W.len+.25,.1,0);P.m.add(sight)}
+function offerBoss(){if(st!=='play'||!P.alive||(TW&&TW.lvl===lvl)||!adsOK())return;st='ad';bossPanel()}
+function bossPanel(note){freeze();
+ show('<h1>☠ BOSS FIGHT</h1><p class="tg">Need a hand? Unlock a temporary weapon to pass this stage.</p>'+(note?'<p class="adn">'+note+'</p>':'')+
+  '<div class="new">'+BWI+'<h2>'+BW.n+'</h2><p>'+BW.d+'</p><p style="font-size:13px">'+stats(BW)+' &nbsp; Damage ×'+BW.dm+'</p><p style="font-size:12px;color:var(--mut)">Temporary — yours until you clear this level.</p></div>'+
+  '<div class="row"><button class="o rvb" id="uw" style="width:100%">📺 WATCH AD · UNLOCK WEAPON</button></div><div class="row"><button class="s" id="nt">No thanks, keep fighting</button></div>');
+ PN.firstChild.classList.add('sm');
+ $('uw').onclick=()=>showReward('boss_weapon',(ok,why)=>{if(ok)grantBW();else bossPanel(adMsg(why))});
+ $('nt').onclick=()=>{hide();st='play'}}
+function grantBW(){TW={lvl:lvl,w:BW};rebuildGun();P.am=BW.mag;P.rl=0;P.q=0;P.cd=0;hide();st='play';ts=1;abShow();hud();msg('BOSS BUSTER UNLOCKED!',1.6,'gold');sUnlock();shake=.4}
+$('ab').addEventListener('pointerdown',e=>e.stopPropagation());
+$('ab').addEventListener('click',e=>{e.stopPropagation();offerBoss()});
 /* secret code */
 const bmb=new THREE.MeshBasicMaterial({color:0xff7a1a});let pk=[],cb=0,ct=-9,hkC=0;
 const kSync=()=>document.body.classList.toggle('kng',!!SV.hx);
