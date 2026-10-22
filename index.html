@@ -112,6 +112,10 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @keyframes hkRing{0%{transform:scale(.05)}100%{transform:scale(7)}}
 </style>
 <script src="https://bridge.playgama.com/v1/stable/playgama-bridge.js"></script>
+<script>
+window.PB={mu:0,ok:0,rdy:0,send:function(){try{bridge.platform.sendMessage(bridge.PLATFORM_MESSAGE.GAME_READY)}catch(e){}}};
+try{bridge.initialize().then(function(){PB.ok=1;try{var p=bridge.platform;p.on(bridge.EVENT_NAME.PAUSE_STATE_CHANGED,function(v){if(v&&window.pauseGame)pauseGame()});p.on(bridge.EVENT_NAME.AUDIO_STATE_CHANGED,function(on){PB.mu=on?0:1});if(p.isAudioEnabled===false)PB.mu=1}catch(e){}if(PB.rdy)PB.send()}).catch(function(e){console.warn(e)})}catch(e){console.warn(e)}
+</script>
 </head>
 <body>
 <div id="hud"><span id="hs"></span><span id="hp"></span><span id="he"></span></div>
@@ -124,7 +128,7 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 <div id="panel"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-let bmu=0;const $=id=>document.getElementById(id),PN=$('panel');
+const $=id=>document.getElementById(id),PN=$('panel');
 const SV={best:1,wp:0,un:1,seen:1,as:1,mu:0,tut:0,st:{},kills:0,hx:0};
 try{Object.assign(SV,JSON.parse(localStorage.getItem('pdr3')||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem('pdr3',JSON.stringify(SV))}catch(e){}};
@@ -173,9 +177,9 @@ function gen(n){let s=n*2654435761>>>0;const r=()=>(s=s*1664525+1013904223>>>0)/
 
 /* audio */
 let AC;const au=()=>{if(!AC)try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}if(AC&&AC.state==='suspended')AC.resume()};
-function tone(f,d,ty,v,f2){if(!AC||SV.mu||bmu)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f2||f/2,t+d);g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d)}
+function tone(f,d,ty,v,f2){if(!AC||SV.mu||PB.mu)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f2||f/2,t+d);g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d)}
 const NB={};function mkNB(d){const n=AC.sampleRate*d,b=AC.createBuffer(1,n,AC.sampleRate),a=b.getChannelData(0);for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);return b}
-function noise(d,v){if(!AC||SV.mu||bmu)return;const b=NB[d]||(NB[d]=mkNB(d));const s=AC.createBufferSource(),g=AC.createGain();s.buffer=b;g.gain.value=v;s.connect(g).connect(AC.destination);s.start()}
+function noise(d,v){if(!AC||SV.mu||PB.mu)return;const b=NB[d]||(NB[d]=mkNB(d));const s=AC.createBufferSource(),g=AC.createGain();s.buffer=b;g.gain.value=v;s.connect(g).connect(AC.destination);s.start()}
 const sShot=()=>{noise(.16,.3);tone(140,.14,'square',.1)},sBoom=()=>{noise(.5,.55);tone(70,.4,'sine',.4)},sThud=v=>tone(90,.1,'sine',Math.min(.2,v/40)),sEn=()=>tone(260,.25,'sawtooth',.05,520),sJump=()=>tone(300,.12,'triangle',.1,600),
  sUnlock=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.3,'triangle',.22,f*1.01),i*110));
 
@@ -436,8 +440,7 @@ $('td').addEventListener('pointerdown',e=>{e.stopPropagation();dash()});
 $('tg').addEventListener('pointerdown',e=>{e.stopPropagation();haki()});
 kSync();chkHx();
 menu();loop();
-/* Playgama Bridge */
-if(window.bridge)bridge.initialize().then(()=>{try{const p=bridge.platform;p.on(bridge.EVENT_NAME.PAUSE_STATE_CHANGED,v=>{if(v)pauseGame()});p.on(bridge.EVENT_NAME.AUDIO_STATE_CHANGED,on=>{bmu=on?0:1});if(p.isAudioEnabled===false)bmu=1;p.sendMessage(bridge.PLATFORM_MESSAGE.GAME_READY)}catch(e){}}).catch(()=>{});
+PB.rdy=1;if(PB.ok)PB.send();
 </script>
 </body>
 </html>
