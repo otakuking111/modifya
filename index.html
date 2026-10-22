@@ -111,6 +111,10 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @keyframes hkFlash{0%{opacity:1;background:radial-gradient(circle,rgba(193,59,255,.4),rgba(255,42,85,.15) 60%,transparent 80%)}100%{opacity:0}}
 @keyframes hkRing{0%{transform:scale(.05)}100%{transform:scale(7)}}
 </style>
+<script src="https://bridge.playgama.com/sdk.js"></script>
+<script>
+  window.bridge && window.bridge.initialize();
+</script>
 </head>
 <body>
 <div id="hud"><span id="hs"></span><span id="hp"></span><span id="he"></span></div>
