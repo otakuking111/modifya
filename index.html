@@ -495,13 +495,7 @@ setInterval(()=>{scE.style.display=(st==='play'||st==='pause'||st==='win'||st===
  const bo=en.find(q=>q.alive&&q.boss);bb.style.display=bo&&st==='play'?'block':'none';if(bo)bb.firstChild.style.width=Math.max(0,bo.hp/bo.mh*100)+'%';const on=cb>1&&time-ct<3&&st==='play';cmE.classList.toggle('on',on);if(on){cmE.firstChild.textContent='COMBO ×'+cb;cmE.lastChild.style.transform='scaleX('+Math.max(0,(3-(time-ct))/3)+')'}},100);
 // auto-pause when the tab is hidden
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame()});
-// plain wind ambience (no melody, no rhythm, no instruments) - respects the mute setting
-let amb=null;
-setInterval(()=>{if(!AC||SV.mu||document.hidden||(st!=='play'&&st!=='menu')){if(amb)amb.g.gain.setTargetAtTime(0,AC.currentTime,.2);return}
- if(AC.state!=='running')return;
- if(!amb){const bf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),d=bf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const sr=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();sr.buffer=bf;sr.loop=true;f.type='lowpass';f.frequency.value=420;g.gain.value=0;sr.connect(f).connect(g).connect(AC.destination);sr.start();amb={f,g}}
- const hot=st==='play'&&(lvl%10===0||en.some(q=>q.alive&&q.boss));
- amb.f.frequency.setTargetAtTime((hot?300:420)+160*Math.sin(time*.7),AC.currentTime,.3);amb.g.gain.setTargetAtTime(hot?.07:.035,AC.currentTime,.3)},200);
+
 // synthwave sun + horizon grid backdrop with parallax
 const cv=document.createElement('canvas');cv.width=512;cv.height=256;const x=cv.getContext('2d');
 let g=x.createRadialGradient(256,120,10,256,120,110);g.addColorStop(0,'rgba(255,214,102,.95)');g.addColorStop(.55,'rgba(255,61,240,.6)');g.addColorStop(1,'rgba(255,61,240,0)');x.fillStyle=g;x.beginPath();x.arc(256,120,110,0,7);x.fill();
